@@ -5,6 +5,7 @@ export type News = {
   text: string;
   imgUrl: string;
   createdAt: number;
+  description: string;
 };
 
 export type NewNews = Omit<News, "createdAt" | "authorId" | "id">;

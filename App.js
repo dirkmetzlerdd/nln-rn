@@ -1,11 +1,6 @@
 import * as React from "react";
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, SafeAreaView } from "react-native";
-import { AppRegistry } from "react-native";
-import { Button, Provider as PaperProvider } from "react-native-paper";
-import { name as appName } from "./app.json";
-import MainNav from "./components/navigation";
-import NewsList from "./screens/newsList";
+import { StyleSheet, View } from "react-native";
+import { Provider as PaperProvider } from "react-native-paper";
 import Navigation from "./navigation";
 
 //<MainNav style={styles.card} />
