@@ -1,4 +1,9 @@
-import { StyleSheet, useWindowDimensions, Dimensions } from "react-native";
+import {
+  StyleSheet,
+  useWindowDimensions,
+  Dimensions,
+  Image,
+} from "react-native";
 import { News } from "../types/news";
 import { Card, Text } from "react-native-paper";
 import AutoHeightWebView from "react-native-autoheight-webview";
@@ -14,7 +19,12 @@ export default function NewsPreview({
 
   return (
     <Card style={styles.card}>
-      <Card.Cover source={{ uri: "https://picsum.photos/700" }} />
+      <Image
+        style={styles.image}
+        source={{
+          uri: "https://picsum.photos/700",
+        }}
+      />
       <Card.Content>
         <Text style={styles.header}>{title}</Text>
         <AutoHeightWebView
@@ -31,11 +41,15 @@ export default function NewsPreview({
 }
 
 const styles = StyleSheet.create({
-  card: { marginBottom: 10, marginHorizontal: 5 },
+  card: { marginBottom: 10, marginHorizontal: 5, overflow: "hidden" },
   header: {
     paddingVertical: 5,
     textTransform: "uppercase",
     fontWeight: "bold",
     fontSize: 20,
+  },
+  image: {
+    width: "100%",
+    height: 200,
   },
 });

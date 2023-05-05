@@ -5,7 +5,7 @@ import {
   DarkTheme,
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Icon from "react-native-vector-icons/FontAwesome";
+import Icon from "react-native-vector-icons/AntDesign";
 import * as React from "react";
 import { ColorSchemeName, View } from "react-native";
 import LinkingConfiguration from "./LinkingConfiguration";
@@ -73,9 +73,10 @@ function BottomTabNavigator() {
         name="News"
         component={NewsList}
         options={{
+          headerShown: false,
           title: "News",
           tabBarIcon: ({ color }) => (
-            <Icon name="circle" size={25} color="#000" />
+            <Icon name="layout" size={25} color={color} />
           ),
         }}
       />
@@ -86,7 +87,7 @@ function BottomTabNavigator() {
         options={{
           title: "Profile",
           tabBarIcon: ({ color }) => (
-            <Icon name="user" size={25} color="#000" />
+            <Icon name="iconfontdesktop" size={25} color={color} />
           ),
         }}
       />
@@ -97,7 +98,7 @@ function BottomTabNavigator() {
         options={{
           title: "Settings",
           tabBarIcon: ({ color }) => (
-            <Icon name="circle" size={25} color="#000" />
+            <Icon name="appstore-o" size={25} color={color} />
           ),
         }}
       />
