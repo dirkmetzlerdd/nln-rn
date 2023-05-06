@@ -3,6 +3,7 @@ import {
   NavigationContainer,
   DefaultTheme,
   DarkTheme,
+  useTheme,
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Icon from "react-native-vector-icons/AntDesign";
@@ -14,16 +15,48 @@ import NewsList from "../screens/newsList";
 import NewsDetails from "../screens/newsDetails";
 import Profile from "../screens/profile";
 import Services from "../screens/services";
+import Login from "../screens/login";
+import { useColorScheme } from "react-native";
 
-export default function Navigation({
-  colorScheme,
-}: {
-  colorScheme: ColorSchemeName;
-}) {
+const sandTan = "#e1b382";
+const tanShadow = "#c89666";
+const nightBlue = "#2d545e";
+const blueShadow = "#12343b";
+
+const vintageYellow = "#feda6a";
+const silverFox = "#d4d4dc";
+const matteGrey = "#393f4d";
+const darkSlate = "#1d1e22";
+
+const MyTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: "rgb(255, 45, 85)",
+    // background: yellow,
+    // text: nightBlue,
+  },
+};
+
+const MyThemeDark = {
+  ...DarkTheme,
+  colors: {
+    ...DarkTheme.colors,
+    primary: vintageYellow,
+    text: silverFox,
+    background: matteGrey,
+    cardBackground: darkSlate,
+    textSecondary: matteGrey,
+  },
+};
+
+export default function Navigation() {
+  const scheme = useColorScheme();
+
   return (
     <NavigationContainer
       linking={LinkingConfiguration}
-      theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+      theme={scheme === "dark" ? MyThemeDark : MyTheme}
     >
       <RootNavigator />
     </NavigationContainer>
@@ -47,11 +80,12 @@ function RootNavigator() {
       <Stack.Screen
         name="NewsDetails"
         component={NewsDetails}
-        // options={{ headerShown: false }}
+        options={{ headerShown: false }}
       />
       <Stack.Screen name="AddService" component={NotFound} />
       <Stack.Screen name="FindService" component={NotFound} />
       <Stack.Screen name="SetActiveService" component={NotFound} />
+      <Stack.Screen name="Login" component={Login} />
       <Stack.Screen
         name="NotFound"
         component={NotFound}
@@ -67,6 +101,8 @@ function RootNavigator() {
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 function BottomTabNavigator() {
+  const { colors } = useTheme();
+
   return (
     <View style={{ flex: 1 }}>
       <BottomTab.Navigator
@@ -79,7 +115,7 @@ function BottomTabNavigator() {
             justifyContent: "center",
             alignItems: "center",
           },
-          tabBarActiveTintColor: "black",
+          tabBarActiveTintColor: colors.text,
           tabBarLabelStyle: {},
           tabBarShowLabel: true,
         }}
