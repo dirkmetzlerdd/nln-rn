@@ -1,19 +1,21 @@
 import { useEffect, useState } from "react";
 import { SafeAreaView, View, ScrollView, TouchableOpacity } from "react-native";
 import { Text } from "react-native-paper";
-import { collection, onSnapshot } from "firebase/firestore";
 import { initialize } from "../firebase/main";
-import { DB_COLS } from "../types/main";
-import { News } from "../types/news";
+import { useAuthContext } from "../context/authContext";
+import Login from "./login";
 
 const { firestore } = initialize();
 
 export default function Profile() {
+  const { user } = useAuthContext();
+
   return (
-    <View style={{ flex: 1 }}>
-      <ScrollView style={{ flex: 1 }}>
-        <Text>Profile</Text>
-      </ScrollView>
+    <View style={{ flex: 1, backgroundColor: "white" }}>
+      <Text>{user?.email}</Text>
+      <Text>{user?.firstName}</Text>
+      <Text>{user?.surname}</Text>
+      <Login />
     </View>
   );
 }

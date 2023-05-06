@@ -3,11 +3,11 @@ import {
   useWindowDimensions,
   Dimensions,
   Image,
+  View,
 } from "react-native";
 import { News } from "../types/news";
 import { Card, Text } from "react-native-paper";
-import AutoHeightWebView from "react-native-autoheight-webview";
-import { wrapAsHtml } from "../utils/main";
+import { useTheme } from "@react-navigation/native";
 
 export default function NewsPreview({
   title,
@@ -15,10 +15,15 @@ export default function NewsPreview({
   imgUrl,
   description,
 }: Partial<News>) {
-  const { width, height } = useWindowDimensions();
+  const { colors } = useTheme();
 
   return (
-    <Card style={styles.card}>
+    <Card
+      style={{
+        ...styles.card,
+        backgroundColor: colors.cardBackground,
+      }}
+    >
       <Image
         style={styles.image}
         source={{
@@ -26,15 +31,8 @@ export default function NewsPreview({
         }}
       />
       <Card.Content>
-        <Text style={styles.header}>{title}</Text>
-        <AutoHeightWebView
-          scrollEnabled={false}
-          originWhitelist={["*"]}
-          source={{ html: wrapAsHtml(description) }}
-          style={{
-            width: Dimensions.get("window").width,
-          }}
-        />
+        <Text style={{ ...styles.header, color: colors.text }}>{title}</Text>
+        <Text style={{ color: colors.text }}>{description}</Text>
       </Card.Content>
     </Card>
   );

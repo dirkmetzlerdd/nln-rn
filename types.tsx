@@ -23,6 +23,7 @@ export type RootStackParamList = {
   NewsDetails: undefined;
   AddService: undefined;
   FindService: undefined;
+  Login: undefined;
   SetActiveService: undefined;
 };
 

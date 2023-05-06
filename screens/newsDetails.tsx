@@ -9,14 +9,16 @@ import {
 import { wrapAsHtml } from "../utils/main";
 import AutoHeightWebView from "react-native-autoheight-webview";
 import { StackScreenProps } from "../types";
+import { useTheme } from "@react-navigation/native";
 
 export default function NewsDetails({
   route,
 }: StackScreenProps<"NewsDetails">) {
   const { news } = route?.params;
+  const { colors } = useTheme();
 
   return (
-    <View style={styles.container}>
+    <View style={{ flex: 1, backgroundColor: colors.cardBackground }}>
       <ScrollView style={{ flex: 1 }}>
         <Image
           style={styles.image}
@@ -25,12 +27,14 @@ export default function NewsDetails({
           }}
         />
         <View style={styles.contentWrapper}>
-          <Text style={styles.header}>{news.title}</Text>
+          <Text style={{ ...styles.header, color: colors.text }}>
+            {news.title}
+          </Text>
           <AutoHeightWebView
             scrollEnabled={false}
             originWhitelist={["*"]}
             // @ts-ignore
-            source={{ html: wrapAsHtml(news.text) }}
+            source={{ html: wrapAsHtml(news.text, colors.text) }}
             style={{
               width: Dimensions.get("window").width,
             }}

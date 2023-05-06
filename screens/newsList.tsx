@@ -7,12 +7,14 @@ import { DB_COLS } from "../types/main";
 import { News } from "../types/news";
 import NewsPreview from "../components/newsPreview";
 import Icon from "react-native-vector-icons/AntDesign";
+import { useTheme } from "@react-navigation/native";
 
 const { firestore } = initialize();
 
 export default function NewsList({ navigation }: any) {
   const [news, setNews] = useState<Array<News>>([]);
   const [visible, setVisible] = useState(false);
+  const { colors } = useTheme();
 
   const containerStyle = { backgroundColor: "white", padding: 20 };
 
@@ -39,6 +41,7 @@ export default function NewsList({ navigation }: any) {
             <ScrollView>
               {chips.map((item) => (
                 <Chip
+                  key={item}
                   mode="outlined"
                   onPress={() => console.log("Pressed")}
                   style={{ margin: 5 }}
@@ -53,13 +56,13 @@ export default function NewsList({ navigation }: any) {
           <View style={{ flex: 1 }}>
             {news.map(({ id, imgUrl, text, title, description }) => (
               <TouchableOpacity
+                key={id}
                 activeOpacity={1}
                 onPress={() =>
                   navigation.navigate("NewsDetails", {
                     news: { id, imgUrl, text, title, description },
                   })
                 }
-                key={id}
               >
                 <NewsPreview
                   key={id}
@@ -79,15 +82,15 @@ export default function NewsList({ navigation }: any) {
           top: 55,
           right: 10,
           position: "absolute",
-          backgroundColor: "white",
+          backgroundColor: colors.cardBackground,
           padding: 10,
           borderRadius: 50,
-          borderColor: "grey",
+          borderColor: colors.text,
           borderWidth: 1,
         }}
         onPress={() => setVisible(!visible)}
       >
-        <Icon name="filter" size={25} color={"grey"} />
+        <Icon name="filter" size={25} color={colors.text} />
       </TouchableOpacity>
     </SafeAreaView>
   );
