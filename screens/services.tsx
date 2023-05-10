@@ -24,8 +24,15 @@ export default function Services() {
           placeholder=""
           value={search}
           onChangeText={setSearch}
-          right={<TextInput.Affix />}
+          right={
+            search ? (
+              <TextInput.Icon icon="delete" onPress={() => setSearch("")} />
+            ) : null
+          }
           style={{ marginTop: 10 }}
+          textColor={colors.text}
+          outlineColor="gray"
+          activeOutlineColor={colors.text}
         />
         <ServicesTable mode="recommended" />
       </ScrollView>
