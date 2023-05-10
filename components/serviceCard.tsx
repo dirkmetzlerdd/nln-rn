@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/AntDesign";
 import { Service } from "../types/service";
+import { updateProfile } from "../firebase/user";
 
 export default function ServicesOverviewCard({
   name,
@@ -64,7 +65,10 @@ export default function ServicesOverviewCard({
           }}
         >
           <TouchableOpacity
-            onPress={() => toggleIsInMyNLN(!isInMyNLN)}
+            onPress={() => {
+              updateProfile({ subscribedToServices: ["lkmclsdkmclkdm"] });
+              toggleIsInMyNLN(!isInMyNLN);
+            }}
             style={{
               flexDirection: "row",
               borderColor: isInMyNLN ? colors.text : colors.primary,

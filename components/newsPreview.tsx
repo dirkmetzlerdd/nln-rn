@@ -21,7 +21,7 @@ export default function NewsPreview({
     <Card
       style={{
         ...styles.card,
-        backgroundColor: colors.cardBackground,
+        backgroundColor: colors.card,
       }}
     >
       <Image

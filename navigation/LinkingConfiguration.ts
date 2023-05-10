@@ -17,7 +17,7 @@ const linking: LinkingOptions<RootStackParamList> = {
       NewsDetails: {},
       AddService: {},
       FindService: {},
-      Login: {},
+      Account: {},
       SetActiveService: {},
       NotFound: "*",
     },

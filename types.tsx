@@ -23,8 +23,8 @@ export type RootStackParamList = {
   NewsDetails: undefined;
   AddService: undefined;
   FindService: undefined;
-  Login: undefined;
   SetActiveService: undefined;
+  Account: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =

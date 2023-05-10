@@ -1,9 +1,11 @@
+import { Timestamp } from "firebase/firestore";
+
 export type Profile = {
   authId: string;
   email: string;
   firstName: string;
   surname: string;
-  createdAt: number;
+  createdAt: Timestamp;
   isAdminOfServices: Array<string>;
   subscribedToServices: Array<string>;
   adminConfig: AdminConfig;
@@ -17,6 +19,7 @@ export type NewProfile = Omit<
   | "subscribedToServices"
   | "appConfig"
   | "adminConfig"
+  | "authId"
 >;
 
 type AdminConfig = {

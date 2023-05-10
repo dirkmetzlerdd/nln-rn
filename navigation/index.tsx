@@ -8,20 +8,15 @@ import {
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Icon from "react-native-vector-icons/AntDesign";
 import * as React from "react";
-import { ColorSchemeName, View, Text } from "react-native";
+import { View } from "react-native";
 import LinkingConfiguration from "./LinkingConfiguration";
 import { RootStackParamList, RootTabParamList } from "../types";
 import NewsList from "../screens/newsList";
 import NewsDetails from "../screens/newsDetails";
-import Profile from "../screens/profile";
+import Profile from "../screens/account";
 import Services from "../screens/services";
-import Login from "../screens/login";
 import { useColorScheme } from "react-native";
-
-const sandTan = "#e1b382";
-const tanShadow = "#c89666";
-const nightBlue = "#2d545e";
-const blueShadow = "#12343b";
+import Account from "../screens/account";
 
 const vintageYellow = "#feda6a";
 const silverFox = "#d4d4dc";
@@ -33,8 +28,6 @@ const MyTheme = {
   colors: {
     ...DefaultTheme.colors,
     primary: "rgb(255, 45, 85)",
-    // background: yellow,
-    // text: nightBlue,
   },
 };
 
@@ -85,7 +78,7 @@ function RootNavigator() {
       <Stack.Screen name="AddService" component={NotFound} />
       <Stack.Screen name="FindService" component={NotFound} />
       <Stack.Screen name="SetActiveService" component={NotFound} />
-      <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="Account" component={Account} />
       <Stack.Screen
         name="NotFound"
         component={NotFound}
