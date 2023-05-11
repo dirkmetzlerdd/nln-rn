@@ -1,18 +1,15 @@
 import {
   collection,
   doc,
-  getDocs,
-  query,
+  getDoc,
   serverTimestamp,
   setDoc,
-  updateDoc,
-  where,
 } from "firebase/firestore";
 import { initialize } from "./main";
 import { DB_COLS } from "../types/main";
 import { NewProfile, Profile } from "../types/user";
 
-const { firestore, auth } = initialize();
+const { firestore, authEmail } = initialize();
 
 export function addProfile(newProfile: NewProfile) {
   setDoc(doc(collection(firestore, DB_COLS.profile), newProfile.email), {
@@ -22,32 +19,25 @@ export function addProfile(newProfile: NewProfile) {
 }
 
 export async function getProfile() {
-  if (auth && auth.currentUser) {
-    const profileRef = await getDocs(
-      // USE EMAIL AS ID
-      query(
-        collection(firestore, DB_COLS.profile),
-        where("authId", "==", auth.currentUser.uid)
-      )
-    );
+  let data = undefined;
+  let id = undefined;
 
-    return {
-      data: profileRef.docs.at(0)?.data(),
-      id: profileRef.docs.at(0)?.id,
-    };
-  } else {
-    return { data: undefined, id: undefined };
+  if (authEmail) {
+    const docRef = doc(collection(firestore, DB_COLS.profile), authEmail);
+    const profileRef = await getDoc(docRef);
+    data = profileRef.data();
+    id = profileRef.id;
   }
+
+  return { data, id };
 }
 
 export async function updateProfile({
   subscribedToServices,
 }: Partial<Profile>) {
-  if (auth && auth.currentUser) {
-    const profileId = (await getProfile()).id;
-
+  if (authEmail) {
     setDoc(
-      doc(collection(firestore, DB_COLS.profile), profileId),
+      doc(collection(firestore, DB_COLS.profile), authEmail),
       { subscribedToServices },
       { merge: true }
     );

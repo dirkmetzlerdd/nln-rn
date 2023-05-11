@@ -10,5 +10,11 @@ export function initialize() {
   const auth = getAuth(firebaseApp);
   const firestore = getFirestore(firebaseApp);
   const storage = getStorage(firebaseApp);
-  return { firebaseApp, auth, firestore, storage };
+  return {
+    firebaseApp,
+    auth,
+    firestore,
+    storage,
+    authEmail: auth?.currentUser?.email,
+  };
 }

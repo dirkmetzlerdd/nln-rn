@@ -19,7 +19,7 @@ async function getValueFor(key: string) {
 }
 
 export default function SignIn({ goToSignUp }) {
-  const [email, setEmail] = useState("user2@gmail.com");
+  const [email, setEmail] = useState("user1@gmail.com");
   const [pw, setPw] = useState("123456");
   const { colors } = useTheme();
 
