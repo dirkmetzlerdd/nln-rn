@@ -8,6 +8,7 @@ import { News } from "../types/news";
 import NewsPreview from "../components/newsPreview";
 import Icon from "react-native-vector-icons/AntDesign";
 import { useTheme } from "@react-navigation/native";
+import { useAuthContext } from "../context/authContext";
 
 const { firestore } = initialize();
 
@@ -15,7 +16,9 @@ export default function NewsList({ navigation }: any) {
   const [news, setNews] = useState<Array<News>>([]);
   const [visible, setVisible] = useState(false);
   const { colors } = useTheme();
+  const { user } = useAuthContext();
 
+  console.log(user?.subscribedToServices);
   const containerStyle = { backgroundColor: "white", padding: 20 };
 
   useEffect(() => {
@@ -27,7 +30,7 @@ export default function NewsList({ navigation }: any) {
     });
   }, []);
 
-  const chips = ["All services", "Miami", "London", "Prague", "Miami"];
+  const chips = ["All services", "Miami", "London", "Prague"];
 
   return (
     <SafeAreaView style={{ flex: 1, position: "relative" }}>
@@ -82,7 +85,7 @@ export default function NewsList({ navigation }: any) {
           top: 55,
           right: 10,
           position: "absolute",
-          backgroundColor: colors.cardBackground,
+          backgroundColor: colors.card,
           padding: 10,
           borderRadius: 50,
           borderColor: colors.text,

@@ -28,6 +28,8 @@ export default function ServicesTable({ mode }: ServicesTableProps) {
     });
   }, []);
 
+  if (!services.length) return null;
+
   return (
     <View style={styles.container}>
       <Text
@@ -38,8 +40,13 @@ export default function ServicesTable({ mode }: ServicesTableProps) {
       >
         Recomended Services for you:
       </Text>
-      {services.map(({ name, description }) => (
-        <ServicesOverviewCard name={name} description={description} />
+      {services.map(({ name, description, id }) => (
+        <ServicesOverviewCard
+          name={name}
+          description={description}
+          id={id}
+          key={id}
+        />
       ))}
     </View>
   );

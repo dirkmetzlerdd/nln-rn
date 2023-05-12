@@ -18,7 +18,7 @@ export default function NewsDetails({
   const { colors } = useTheme();
 
   return (
-    <View style={{ flex: 1, backgroundColor: colors.cardBackground }}>
+    <View style={{ flex: 1, backgroundColor: colors.card }}>
       <ScrollView style={{ flex: 1 }}>
         <Image
           style={styles.image}

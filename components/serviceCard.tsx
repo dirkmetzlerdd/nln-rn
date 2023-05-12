@@ -11,15 +11,19 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/AntDesign";
 import { Service } from "../types/service";
-import { updateProfile } from "../firebase/user";
+import { toggleServiceSubscription } from "../firebase/user";
+import { useAuthContext } from "../context/authContext";
 
 export default function ServicesOverviewCard({
   name,
   description,
+  id,
 }: Partial<Service>) {
   const { colors } = useTheme();
-  const [isInMyNLN, toggleIsInMyNLN] = useState(false);
+  const { user } = useAuthContext();
+  const isInMyNLN = user && id && user.subscribedToServices?.includes(id);
 
+  console.log(user);
   return (
     <View
       style={{
@@ -66,8 +70,7 @@ export default function ServicesOverviewCard({
         >
           <TouchableOpacity
             onPress={() => {
-              updateProfile({ subscribedToServices: ["lkmclsdkmclkdm"] });
-              toggleIsInMyNLN(!isInMyNLN);
+              toggleServiceSubscription(id);
             }}
             style={{
               flexDirection: "row",

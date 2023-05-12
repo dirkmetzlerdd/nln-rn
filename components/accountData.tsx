@@ -27,6 +27,10 @@ export default function AccountData() {
         <Text>{user?.email}</Text>
         <Text>{user?.firstName}</Text>
         <Text>{user?.surname}</Text>
+        {user &&
+          user.subscribedToServices.map((x) => {
+            return <Text key={x}>{x}</Text>;
+          })}
       </View>
       <Button
         mode="contained"

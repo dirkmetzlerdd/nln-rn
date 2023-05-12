@@ -15,6 +15,5 @@ export function initialize() {
     auth,
     firestore,
     storage,
-    authEmail: auth?.currentUser?.email,
   };
 }
