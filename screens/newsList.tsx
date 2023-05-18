@@ -18,7 +18,6 @@ export default function NewsList({ navigation }: any) {
   const { colors } = useTheme();
   const { user } = useAuthContext();
 
-  console.log(user?.subscribedToServices);
   const containerStyle = { backgroundColor: "white", padding: 20 };
 
   useEffect(() => {

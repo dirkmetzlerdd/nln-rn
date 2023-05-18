@@ -15,6 +15,7 @@ const linking: LinkingOptions<RootStackParamList> = {
       },
       Modal: "modal",
       NewsDetails: {},
+      ServiceDetails: {},
       AddService: {},
       FindService: {},
       Account: {},

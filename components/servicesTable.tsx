@@ -1,5 +1,12 @@
 import { useTheme } from "@react-navigation/native";
-import { Image, StyleSheet, Text, View, Dimensions } from "react-native";
+import {
+  Image,
+  StyleSheet,
+  Text,
+  View,
+  Dimensions,
+  ScrollView,
+} from "react-native";
 import { Avatar, Button, Card } from "react-native-paper";
 import { Service } from "../types/service";
 import Icon from "react-native-vector-icons/AntDesign";
@@ -40,12 +47,13 @@ export default function ServicesTable({ mode }: ServicesTableProps) {
       >
         Recomended Services for you:
       </Text>
-      {services.map(({ name, description, id }) => (
+      {services.map(({ name, description, id, geopoint }) => (
         <ServicesOverviewCard
           name={name}
           description={description}
           id={id}
           key={id}
+          geopoint={geopoint}
         />
       ))}
     </View>

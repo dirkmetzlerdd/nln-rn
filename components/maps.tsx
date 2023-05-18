@@ -1,13 +1,6 @@
 import { useEffect, useState } from "react";
 import MapView, { Marker } from "react-native-maps";
-import Geolocation from "react-native-geolocation-service";
-import {
-  StyleSheet,
-  View,
-  Text,
-  Button,
-  PermissionsAndroid,
-} from "react-native";
+import { GeoPoint } from "firebase/firestore";
 
 // const requestLocationPermission = async () => {
 //   try {
@@ -34,7 +27,12 @@ import {
 //   }
 // };
 
-export default function Map() {
+interface MapInt {
+  geopoint: GeoPoint;
+  pointerEvents?: string;
+  height?: number;
+}
+export default function Map({ geopoint, pointerEvents, height }: MapInt) {
   const state = { markers: [] };
   const [location, setLocation] = useState(false);
 
@@ -61,19 +59,24 @@ export default function Map() {
     //   console.log(location);
     // };
   });
+
   return (
     <MapView
-      style={{ height: "100%", width: "100%" }}
+      style={{ height: height || 200, width: "100%" }}
+      pointerEvents={pointerEvents}
       initialRegion={{
-        latitude: 37.78825,
-        longitude: -122.4324,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421,
+        latitude: geopoint.latitude,
+        longitude: geopoint.longitude,
+        latitudeDelta: 0.01,
+        longitudeDelta: 0.01,
       }}
     >
       <Marker
         key={0}
-        coordinate={{ latitude: 37.78825, longitude: -122.4324 }}
+        coordinate={{
+          latitude: geopoint.latitude,
+          longitude: geopoint.longitude,
+        }}
         title={"Marker"}
         description={"Description"}
       />

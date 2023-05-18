@@ -18,6 +18,7 @@ import Services from "../screens/services";
 import { useColorScheme } from "react-native";
 import Account from "../screens/account";
 import AddService from "../screens/addService";
+import ServiceDetails from "../screens/serviceDetails";
 
 const vintageYellow = "#feda6a";
 const silverFox = "#d4d4dc";
@@ -74,6 +75,11 @@ function RootNavigator() {
       <Stack.Screen
         name="NewsDetails"
         component={NewsDetails}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="ServiceDetails"
+        component={ServiceDetails}
         options={{ headerShown: false }}
       />
       <Stack.Screen name="AddService" component={AddService} />

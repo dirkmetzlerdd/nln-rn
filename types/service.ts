@@ -1,3 +1,5 @@
+import { GeoPoint } from "firebase/firestore";
+
 export type Service = {
   id: string;
   name: string;
@@ -5,7 +7,7 @@ export type Service = {
   createdAt: number;
   ownerUid: string;
   adminUids: Array<string>;
-  // geo
+  geopoint: GeoPoint;
 };
 
 export type NewService = Omit<

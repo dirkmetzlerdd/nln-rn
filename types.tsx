@@ -21,6 +21,7 @@ export type RootStackParamList = {
   Modal: undefined;
   NotFound: undefined;
   NewsDetails: undefined;
+  ServiceDetails: undefined;
   AddService: undefined;
   FindService: undefined;
   SetActiveService: undefined;

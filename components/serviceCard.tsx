@@ -1,4 +1,4 @@
-import { useTheme } from "@react-navigation/native";
+import { useNavigation, useTheme } from "@react-navigation/native";
 import { useState } from "react";
 import {
   Image,
@@ -13,90 +13,85 @@ import Icon from "react-native-vector-icons/AntDesign";
 import { Service } from "../types/service";
 import { toggleServiceSubscription } from "../firebase/user";
 import { useAuthContext } from "../context/authContext";
+import Map from "./maps";
+import SubscribeLabel from "./subscribeLabel";
 
 export default function ServicesOverviewCard({
   name,
   description,
   id,
+  geopoint,
 }: Partial<Service>) {
   const { colors } = useTheme();
   const { user } = useAuthContext();
-  const isInMyNLN = user && id && user.subscribedToServices?.includes(id);
+  const navigation = useNavigation();
 
   console.log(user);
   return (
-    <View
+    <TouchableOpacity
       style={{
         backgroundColor: colors.card,
         borderRadius: 10,
-        flexDirection: "row",
         marginBottom: 10,
+        overflow: "hidden",
       }}
+      activeOpacity={1}
+      onPress={() =>
+        navigation.navigate("ServiceDetails", {
+          service: { name, description, id, geopoint },
+        })
+      }
     >
-      <Image
-        style={styles.image}
-        source={{
-          uri: "https://picsum.photos/700",
-        }}
-      />
       <View
         style={{
-          padding: 10,
-          maxWidth: Dimensions.get("window").width - 100,
+          backgroundColor: colors.card,
+          borderRadius: 10,
+          flexDirection: "row",
+          marginBottom: 10,
+          overflow: "hidden",
         }}
       >
-        <Text
-          style={{
-            color: colors.text,
-            fontSize: 20,
-            fontWeight: "bold",
+        <Image
+          style={styles.image}
+          source={{
+            uri: "https://picsum.photos/700",
           }}
-        >
-          {name}
-        </Text>
-        <Text
-          style={{
-            color: colors.text,
-            fontSize: 16,
-          }}
-        >
-          {description}
-        </Text>
+        />
         <View
           style={{
-            flexDirection: "row",
-            marginTop: 10,
+            padding: 10,
+            maxWidth: Dimensions.get("window").width - 100,
           }}
         >
-          <TouchableOpacity
-            onPress={() => {
-              toggleServiceSubscription(id);
-            }}
+          <Text
             style={{
-              flexDirection: "row",
-              borderColor: isInMyNLN ? colors.text : colors.primary,
-              borderRadius: 5,
-              borderWidth: 1,
-              padding: 5,
+              color: colors.text,
+              fontSize: 20,
+              fontWeight: "bold",
             }}
           >
-            <Icon
-              name={isInMyNLN ? "checkcircleo" : "pluscircleo"}
-              size={15}
-              color={isInMyNLN ? colors.text : colors.primary}
-            />
-            <Text
-              style={{
-                color: isInMyNLN ? colors.text : colors.primary,
-                marginLeft: 5,
-              }}
-            >
-              {isInMyNLN ? "IS IN MY NLN" : "ADD TO MY NLN"}
-            </Text>
-          </TouchableOpacity>
+            {name}
+          </Text>
+          <Text
+            style={{
+              color: colors.text,
+              fontSize: 16,
+            }}
+          >
+            {description}
+          </Text>
+          <View
+            style={{
+              flexDirection: "row",
+              marginTop: 10,
+            }}
+          >
+            <SubscribeLabel id={id} />
+          </View>
         </View>
       </View>
-    </View>
+      <Map geopoint={geopoint} pointerEvents="none" />
+    </TouchableOpacity>
   );
 }
 

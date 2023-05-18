@@ -35,7 +35,7 @@ export default function Services() {
           outlineColor="gray"
           activeOutlineColor={colors.text}
         />
-        <Button
+        {/* <Button
           mode="contained"
           onPress={() => navigation.navigate("AddService")}
           style={{
@@ -50,7 +50,7 @@ export default function Services() {
           >
             Add service
           </Text>
-        </Button>
+        </Button> */}
         <ServicesTable mode="recommended" />
       </ScrollView>
     </View>
