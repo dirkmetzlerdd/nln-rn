@@ -1,15 +1,6 @@
 import { useTheme } from "@react-navigation/native";
-import {
-  Image,
-  StyleSheet,
-  Text,
-  View,
-  Dimensions,
-  ScrollView,
-} from "react-native";
-import { Avatar, Button, Card } from "react-native-paper";
+import { StyleSheet, Text, View } from "react-native";
 import { Service } from "../types/service";
-import Icon from "react-native-vector-icons/AntDesign";
 import ServicesOverviewCard from "./serviceCard";
 import { useState, useEffect } from "react";
 import { collection, onSnapshot } from "firebase/firestore";
@@ -21,6 +12,7 @@ const { firestore } = initialize();
 interface ServicesTableProps {
   mode: "search" | "recommended";
 }
+
 export default function ServicesTable({ mode }: ServicesTableProps) {
   const [services, setServices] = useState<Array<Service>>([]);
   const { colors } = useTheme();
@@ -45,7 +37,7 @@ export default function ServicesTable({ mode }: ServicesTableProps) {
           color: colors.text,
         }}
       >
-        Recomended Services for you:
+        Nearby:
       </Text>
       {services.map(({ name, description, id, geopoint }) => (
         <ServicesOverviewCard

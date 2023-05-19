@@ -72,7 +72,9 @@ export default function ServiceDetails({
         </View>
         <Divider />
         {activeTab === "about" && <ServiceDetailsAboutTab service={service} />}
-        {activeTab === "news" && <ServiceDetailsNewsTab />}
+        {activeTab === "news" && (
+          <ServiceDetailsNewsTab serviceId={service.id} />
+        )}
       </ScrollView>
     </View>
   );

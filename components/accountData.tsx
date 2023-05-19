@@ -2,7 +2,7 @@ import { View, StyleSheet, Touchable, TouchableOpacity } from "react-native";
 import { Text, Button, Divider } from "react-native-paper";
 import { initialize } from "../firebase/main";
 import { useAuthContext } from "../context/authContext";
-import { useTheme } from "@react-navigation/native";
+import { useNavigation, useTheme } from "@react-navigation/native";
 import { signOut } from "firebase/auth";
 import Icon from "react-native-vector-icons/AntDesign";
 
@@ -11,6 +11,7 @@ const { auth } = initialize();
 export default function AccountData() {
   const { user } = useAuthContext();
   const { colors } = useTheme();
+  const navigation = useNavigation();
 
   return (
     <View
@@ -33,17 +34,12 @@ export default function AccountData() {
       </View>
       <Divider />
       <TouchableOpacity style={styles.menuLine}>
-        <Text style={styles.menuLineText}>My NLN</Text>
-        <Icon name={"right"} size={20} style={{ color: colors.text }} />
-      </TouchableOpacity>
-      <Divider />
-      <TouchableOpacity style={styles.menuLine}>
         <Text style={styles.menuLineText}>Notification</Text>
         <Icon name={"right"} size={20} style={{ color: colors.text }} />
       </TouchableOpacity>
       <Divider />
       <TouchableOpacity style={styles.menuLine}>
-        <Text style={styles.menuLineText}>Create Service</Text>
+        <Text style={styles.menuLineText}>My NLN</Text>
         <Icon name={"right"} size={20} style={{ color: colors.text }} />
       </TouchableOpacity>
       <Divider />

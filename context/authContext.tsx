@@ -2,18 +2,27 @@ import React, { ReactNode, createContext, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { initialize } from "../firebase/main";
 import { Profile } from "../types/user";
-import { collection, doc, getDocs, onSnapshot } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  onSnapshot,
+} from "firebase/firestore";
 import { DB_COLS } from "../types/main";
 import { News } from "../types/news";
+import { Service } from "../types/service";
 
 const { auth, firestore } = initialize();
 
 export const AuthContext = createContext<{
   user: Partial<Profile> | null;
   news: Array<News>;
+  services: Array<Service>;
 }>({
   user: null,
   news: [],
+  services: [],
 });
 
 export const useAuthContext = () => React.useContext(AuthContext);
@@ -22,6 +31,7 @@ export const TasksDispatchContext = createContext(null);
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = React.useState<Partial<Profile> | null>(null);
   const [news, setNews] = React.useState<Array<News>>([]);
+  const [services, setServices] = React.useState<Array<Service>>([]);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (authUser) => {
@@ -47,11 +57,21 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     } else {
       (async () => {
         const fetchedNews: Array<News> = [];
+        const fetchedServices: Array<Service> = [];
 
         // @ts-ignore
         for (let i = 0; i < user.subscribedToServices.length; ++i) {
           // @ts-ignore
           const serviceId = user.subscribedToServices[i];
+
+          const service = await getDoc(
+            doc(firestore, DB_COLS.service, serviceId)
+          );
+          fetchedServices.push({
+            id: service.id,
+            ...service.data(),
+          } as Service);
+
           const snapshot = await getDocs(
             collection(firestore, `service/${serviceId}/news`)
           );
@@ -62,12 +82,13 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
         }
 
         setNews(fetchedNews);
+        setServices(fetchedServices);
       })();
     }
   }, [user]);
 
   return (
-    <AuthContext.Provider value={{ user, news }}>
+    <AuthContext.Provider value={{ user, news, services }}>
       {children}
     </AuthContext.Provider>
   );
