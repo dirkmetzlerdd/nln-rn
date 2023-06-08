@@ -18,6 +18,7 @@ import NewsPreview from "../components/newsPreview";
 import Icon from "react-native-vector-icons/AntDesign";
 import { useTheme } from "@react-navigation/native";
 import { useAuthContext } from "../context/authContext";
+import { mainStyle } from "../style/main";
 
 export default function NewsList({ navigation }: any) {
   const [activeServices, setActiveServices] = useState<Array<string>>([]);
@@ -47,8 +48,8 @@ export default function NewsList({ navigation }: any) {
             contentContainerStyle={{
               paddingVertical: 30,
               backgroundColor: colors.card,
-              margin: 10,
-              borderRadius: 10,
+              margin: mainStyle.mainScreenSpace * 2,
+              borderRadius: mainStyle.rounded,
             }}
           >
             <ScrollView style={{}}>
@@ -67,7 +68,12 @@ export default function NewsList({ navigation }: any) {
                         justifyContent: "space-between",
                       }}
                     >
-                      <Text style={{ fontSize: 20, alignSelf: "center" }}>
+                      <Text
+                        style={{
+                          fontSize: mainStyle.fontXL,
+                          alignSelf: "center",
+                        }}
+                      >
                         {item.name}
                       </Text>
                       <Switch

@@ -8,6 +8,7 @@ import { TextInput } from "react-native-paper";
 import { useTheme } from "@react-navigation/native";
 import ServicesTable from "../components/servicesTable";
 import { useNavigation } from "@react-navigation/native";
+import { mainStyle } from "../style/main";
 
 const { firestore } = initialize();
 
@@ -17,7 +18,7 @@ export default function Services() {
   const navigation = useNavigation();
 
   return (
-    <View style={{ flex: 1, marginHorizontal: 10 }}>
+    <View style={{ flex: 1, marginHorizontal: mainStyle.mainScreenSpace }}>
       <ScrollView style={{ flex: 1 }}>
         <TextInput
           mode="outlined"
@@ -25,6 +26,7 @@ export default function Services() {
           placeholder=""
           value={search}
           onChangeText={setSearch}
+          left={<TextInput.Icon icon="loupe" />}
           right={
             search ? (
               <TextInput.Icon icon="delete" onPress={() => setSearch("")} />
@@ -35,22 +37,6 @@ export default function Services() {
           outlineColor="gray"
           activeOutlineColor={colors.text}
         />
-        {/* <Button
-          mode="contained"
-          onPress={() => navigation.navigate("AddService")}
-          style={{
-            marginTop: 10,
-            backgroundColor: colors.primary,
-          }}
-        >
-          <Text
-            style={{
-              color: colors.background,
-            }}
-          >
-            Add service
-          </Text>
-        </Button> */}
         <ServicesTable mode="recommended" />
       </ScrollView>
     </View>

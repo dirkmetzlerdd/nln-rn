@@ -12,6 +12,8 @@ import {
 import { DB_COLS } from "../types/main";
 import { News } from "../types/news";
 import { Service } from "../types/service";
+import * as Location from "expo-location";
+const geofire = require("geofire-common");
 
 const { auth, firestore } = initialize();
 
@@ -86,6 +88,26 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
       })();
     }
   }, [user]);
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        console.log("Permission to access location was denied");
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      console.log("location");
+      console.log(location);
+      const center = [51.5074, 0.1278];
+      const radiusInM = 50 * 1000;
+
+      const bounds = geofire.geohashQueryBounds(center, radiusInM);
+      console.log("bounds");
+      console.log(bounds);
+    })();
+  });
 
   return (
     <AuthContext.Provider value={{ user, news, services }}>
