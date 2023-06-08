@@ -1,68 +1,49 @@
-import { View, StyleSheet, Touchable, TouchableOpacity } from "react-native";
-import { Text, Button, Divider } from "react-native-paper";
+import { View, StyleSheet } from "react-native";
 import { initialize } from "../firebase/main";
 import { useAuthContext } from "../context/authContext";
-import { useNavigation, useTheme } from "@react-navigation/native";
+import { useTheme } from "@react-navigation/native";
 import { signOut } from "firebase/auth";
-import Icon from "react-native-vector-icons/AntDesign";
+import ListItem, { ListItemProps } from "./listItem";
 
 const { auth } = initialize();
 
 export default function AccountData() {
   const { user } = useAuthContext();
   const { colors } = useTheme();
-  const navigation = useNavigation();
+
+  const data: Array<ListItemProps> = [
+    { label: user?.email || "", iconName: undefined, showBottomDivider: true },
+    { label: "Notifications", iconName: "right", showBottomDivider: true },
+    { label: "My NLN", iconName: "right", showBottomDivider: true },
+    { label: "Invite", iconName: "right", showBottomDivider: true },
+    { label: "Sign Out", iconName: "right", onPress: () => signOut(auth) },
+  ];
 
   return (
     <View
       style={{
         backgroundColor: colors.card,
-        paddingHorizontal: 15,
-        paddingVertical: 10,
-        borderRadius: 10,
-        marginBottom: 10,
+        ...styles.container,
       }}
     >
-      <View style={styles.menuLine}>
-        <Text style={styles.menuLineText}>
-          {user?.firstName} {user?.surname}
-        </Text>
-      </View>
-      <Divider />
-      <View style={styles.menuLine}>
-        <Text style={styles.menuLineText}>{user?.email}</Text>
-      </View>
-      <Divider />
-      <TouchableOpacity style={styles.menuLine}>
-        <Text style={styles.menuLineText}>Notification</Text>
-        <Icon name={"right"} size={20} style={{ color: colors.text }} />
-      </TouchableOpacity>
-      <Divider />
-      <TouchableOpacity style={styles.menuLine}>
-        <Text style={styles.menuLineText}>My NLN</Text>
-        <Icon name={"right"} size={20} style={{ color: colors.text }} />
-      </TouchableOpacity>
-      <Divider />
-      <TouchableOpacity style={styles.menuLine}>
-        <Text style={styles.menuLineText}>Invite</Text>
-        <Icon name={"right"} size={20} style={{ color: colors.text }} />
-      </TouchableOpacity>
-      <Divider />
-      <TouchableOpacity style={styles.menuLine} onPress={() => signOut(auth)}>
-        <Text style={styles.menuLineText}>Sign Out</Text>
-        <Icon name={"right"} size={20} style={{ color: colors.text }} />
-      </TouchableOpacity>
+      {data.map((item, i) => (
+        <ListItem
+          key={i}
+          label={item.label}
+          iconName={item.iconName}
+          onPress={item.onPress}
+          showBottomDivider={item.showBottomDivider}
+        />
+      ))}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  menuLine: {
-    flexDirection: "row",
-    paddingVertical: 12,
-    justifyContent: "space-between",
-  },
-  menuLineText: {
-    fontSize: 18,
+  container: {
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    borderRadius: 10,
+    marginBottom: 10,
   },
 });
