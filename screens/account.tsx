@@ -16,10 +16,9 @@ export default function Account() {
 
   return (
     <View style={{ flex: 1, padding: 10 }}>
-      {/* {mode === "account" && <AccountData />} */}
       {mode === "account" && <AccountData />}
-      {mode === "signin" && <SignIn goToSignUp={() => setMode("signup")} />}
-      {mode === "signup" && <SignUp goToSignIn={() => setMode("signin")} />}
+      {mode === "signin" && <SignIn switchMode={() => setMode("signup")} />}
+      {mode === "signup" && <SignUp switchMode={() => setMode("signin")} />}
     </View>
   );
 }

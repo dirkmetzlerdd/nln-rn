@@ -9,6 +9,8 @@ export default function SubscribeLabel({ id }: { id: string | undefined }) {
   const { user } = useAuthContext();
   const isInMyNLN = user && id && user.subscribedToServices?.includes(id);
 
+  if (!user) return null;
+
   return (
     <TouchableOpacity
       onPress={() => {

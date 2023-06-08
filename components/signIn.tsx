@@ -1,24 +1,23 @@
 import { useState } from "react";
-import { SafeAreaView, TouchableOpacity, View } from "react-native";
+import {
+  GestureResponderEvent,
+  SafeAreaView,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { Button, Text } from "react-native-paper";
 import { initialize } from "../firebase/main";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import * as SecureStore from "expo-secure-store";
 import { TextInput } from "react-native-paper";
 import { useTheme } from "@react-navigation/native";
 
 const { auth } = initialize();
 
-async function save(key: string, value: string) {
-  await SecureStore.setItemAsync(key, value);
-}
+type SognInProps = {
+  switchMode: (event: GestureResponderEvent) => void;
+};
 
-async function getValueFor(key: string) {
-  let result = await SecureStore.getItemAsync(key);
-  return result;
-}
-
-export default function SignIn({ goToSignUp }) {
+export default function SignIn({ switchMode }: SognInProps) {
   const [email, setEmail] = useState("user1@gmail.com");
   const [pw, setPw] = useState("123456");
   const { colors } = useTheme();
@@ -27,11 +26,6 @@ export default function SignIn({ goToSignUp }) {
     signInWithEmailAndPassword(auth, email, pw)
       .then((userCredential) => {
         const user = userCredential.user;
-
-        if (user) {
-          save("email", email);
-          save("pw", pw);
-        }
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -84,7 +78,7 @@ export default function SignIn({ goToSignUp }) {
           </Text>
         </Button>
       </View>
-      <TouchableOpacity activeOpacity={1} onPress={goToSignUp}>
+      <TouchableOpacity activeOpacity={1} onPress={switchMode}>
         <Text style={{ paddingVertical: 15 }}>Don't have an account yet?</Text>
       </TouchableOpacity>
     </SafeAreaView>

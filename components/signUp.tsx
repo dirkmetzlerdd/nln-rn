@@ -1,5 +1,10 @@
 import { useState } from "react";
-import { SafeAreaView, TouchableOpacity, View } from "react-native";
+import {
+  GestureResponderEvent,
+  SafeAreaView,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { Button, Text } from "react-native-paper";
 import { initialize } from "../firebase/main";
 import { createUserWithEmailAndPassword } from "firebase/auth";
@@ -9,7 +14,11 @@ import { addProfile } from "../firebase/user";
 
 const { auth } = initialize();
 
-export default function SignUp({ goToSignIn }) {
+type SognUpProps = {
+  switchMode: (event: GestureResponderEvent) => void;
+};
+
+export default function SignUp({ switchMode }: SognUpProps) {
   const [firstName, setFirstName] = useState("");
   const [surname, setSurname] = useState("");
   const [email, setEmail] = useState("");
@@ -100,7 +109,7 @@ export default function SignUp({ goToSignIn }) {
           </Text>
         </Button>
       </View>
-      <TouchableOpacity activeOpacity={1} onPress={goToSignIn}>
+      <TouchableOpacity activeOpacity={1} onPress={switchMode}>
         <Text style={{ paddingVertical: 15 }}>Already have an account?</Text>
       </TouchableOpacity>
     </SafeAreaView>
