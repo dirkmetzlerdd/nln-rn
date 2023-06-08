@@ -1,7 +1,7 @@
 import { View, StyleSheet, Text } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import SubscribeLabel from "../components/subscribeLabel";
-import Map from "../components/maps";
+import Map from "./map";
 import { Service } from "../types/service";
 
 export default function ServiceDetailsAboutTab({

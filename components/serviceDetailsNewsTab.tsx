@@ -1,21 +1,14 @@
 import { View } from "react-native";
-import { useEffect, useState } from "react";
-import { collection, onSnapshot } from "firebase/firestore";
-import { DB_COLS } from "../types/main";
-import { News } from "../types/news";
-import { initialize } from "../firebase/main";
 import NewsPreview from "./newsPreview";
 import { useTheme } from "@react-navigation/native";
 import { useAuthContext } from "../context/authContext";
 
-const { firestore } = initialize();
-
 export default function ServiceDetailsNewsTab({
   serviceId,
 }: {
-  serviceId: string;
+  serviceId: string | undefined;
 }) {
-  const { user, news } = useAuthContext();
+  const { news } = useAuthContext();
   const { colors } = useTheme();
 
   return (

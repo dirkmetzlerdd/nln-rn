@@ -1,12 +1,6 @@
-import {
-  StyleSheet,
-  useWindowDimensions,
-  Dimensions,
-  Image,
-  View,
-} from "react-native";
+import { StyleSheet, Image, View } from "react-native";
 import { News } from "../types/news";
-import { Card, Text } from "react-native-paper";
+import { Text } from "react-native-paper";
 import { useTheme } from "@react-navigation/native";
 import { mainStyle } from "../style/main";
 

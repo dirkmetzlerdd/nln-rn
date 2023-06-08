@@ -2,27 +2,16 @@ import {
   View,
   ScrollView,
   StyleSheet,
-  Dimensions,
   Image,
   Text,
-  Touchable,
   TouchableOpacity,
 } from "react-native";
 import { StackScreenProps } from "../types";
 import { useTheme } from "@react-navigation/native";
-import SubscribeLabel from "../components/subscribeLabel";
-import Map from "../components/maps";
-import { useEffect, useState } from "react";
-import { collection, onSnapshot } from "firebase/firestore";
-import { DB_COLS } from "../types/main";
-import { News } from "../types/news";
-import { initialize } from "../firebase/main";
-import NewsPreview from "../components/newsPreview";
+import { useState } from "react";
 import { Divider } from "react-native-paper";
 import ServiceDetailsAboutTab from "../components/serviceDetailsAboutTab";
 import ServiceDetailsNewsTab from "../components/serviceDetailsNewsTab";
-
-const { firestore } = initialize();
 
 export default function ServiceDetails({
   route,

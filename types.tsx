@@ -9,6 +9,7 @@ import {
   NavigatorScreenParams,
 } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { Service } from "./types/service";
 
 declare global {
   namespace ReactNavigation {
@@ -21,7 +22,7 @@ export type RootStackParamList = {
   Modal: undefined;
   NotFound: undefined;
   NewsDetails: undefined;
-  ServiceDetails: undefined;
+  ServiceDetails: { service: Partial<Service> };
   AddService: undefined;
   FindService: undefined;
   SetActiveService: undefined;

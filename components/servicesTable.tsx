@@ -9,15 +9,16 @@ import { DB_COLS } from "../types/main";
 
 const { firestore } = initialize();
 
-interface ServicesTableProps {
-  mode: "search" | "recommended";
-}
+type ServicesTableProps = {
+  mode: "search" | "nearby";
+};
 
 export default function ServicesTable({ mode }: ServicesTableProps) {
   const [services, setServices] = useState<Array<Service>>([]);
   const { colors } = useTheme();
 
   useEffect(() => {
+    // TODO snapshot here??
     onSnapshot(collection(firestore, DB_COLS.service), (snapshot) => {
       const result: Array<Service> = snapshot.docs.map((item) => {
         return { id: item.id, ...item.data() } as Service;
