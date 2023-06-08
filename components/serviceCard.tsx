@@ -34,6 +34,7 @@ export default function ServicesOverviewCard({
         })
       }
     >
+      {geopoint ? <Map geopoint={geopoint} pointerEvents="none" /> : null}
       <View
         style={{
           ...styles.wrapper,
@@ -73,7 +74,6 @@ export default function ServicesOverviewCard({
           </View>
         </View>
       </View>
-      {geopoint ? <Map geopoint={geopoint} pointerEvents="none" /> : null}
     </TouchableOpacity>
   );
 }

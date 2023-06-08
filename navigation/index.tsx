@@ -29,7 +29,11 @@ const MyTheme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    primary: "rgb(255, 45, 85)",
+    primary: "#be3144",
+    text: "#303841",
+    textSecondary: "#d3d6db",
+    background: "#d3d6db",
+    cardBackground: "#3a4750",
   },
 };
 
@@ -39,9 +43,9 @@ const MyThemeDark = {
     ...DarkTheme.colors,
     primary: vintageYellow,
     text: silverFox,
+    textSecondary: matteGrey,
     background: matteGrey,
     cardBackground: darkSlate,
-    textSecondary: matteGrey,
   },
 };
 
