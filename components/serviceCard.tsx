@@ -90,7 +90,7 @@ export default function ServicesOverviewCard({
           </View>
         </View>
       </View>
-      <Map geopoint={geopoint} pointerEvents="none" />
+      {geopoint ? <Map geopoint={geopoint} pointerEvents="none" /> : null}
     </TouchableOpacity>
   );
 }
