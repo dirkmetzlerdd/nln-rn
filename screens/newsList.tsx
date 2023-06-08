@@ -16,15 +16,16 @@ import {
 } from "react-native-paper";
 import NewsPreview from "../components/newsPreview";
 import Icon from "react-native-vector-icons/AntDesign";
-import { useTheme } from "@react-navigation/native";
+import { useNavigation, useTheme } from "@react-navigation/native";
 import { useAuthContext } from "../context/authContext";
 import { mainStyle } from "../style/main";
 
-export default function NewsList({ navigation }: any) {
+export default function NewsList() {
   const [activeServices, setActiveServices] = useState<Array<string>>([]);
   const [visible, setVisible] = useState(false);
   const { news, services } = useAuthContext();
   const { colors } = useTheme();
+  const navigation = useNavigation();
 
   useEffect(() => {
     setActiveServices(services.map((item) => item.id));

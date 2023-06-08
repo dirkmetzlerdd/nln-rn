@@ -1,21 +1,13 @@
-import { useEffect, useState } from "react";
-import { SafeAreaView, View, ScrollView } from "react-native";
-import { Text, Button } from "react-native-paper";
-import { initialize } from "../firebase/main";
-import { DB_COLS } from "../types/main";
-import { News } from "../types/news";
+import { useState } from "react";
+import { View, ScrollView } from "react-native";
 import { TextInput } from "react-native-paper";
 import { useTheme } from "@react-navigation/native";
 import ServicesTable from "../components/servicesTable";
-import { useNavigation } from "@react-navigation/native";
 import { mainStyle } from "../style/main";
-
-const { firestore } = initialize();
 
 export default function Services() {
   const [search, setSearch] = useState("");
   const { colors } = useTheme();
-  const navigation = useNavigation();
 
   return (
     <View style={{ flex: 1, marginHorizontal: mainStyle.mainScreenSpace }}>
@@ -37,7 +29,7 @@ export default function Services() {
           outlineColor="gray"
           activeOutlineColor={colors.text}
         />
-        <ServicesTable mode="recommended" />
+        <ServicesTable mode="nearby" />
       </ScrollView>
     </View>
   );
