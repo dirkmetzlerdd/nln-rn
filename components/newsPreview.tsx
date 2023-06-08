@@ -6,7 +6,6 @@ import { mainStyle } from "../style/main";
 
 export default function NewsPreview({
   title,
-  text,
   imgUrl,
   description,
 }: Partial<News>) {
@@ -19,12 +18,14 @@ export default function NewsPreview({
         backgroundColor: colors.card,
       }}
     >
-      <Image
-        style={styles.image}
-        source={{
-          uri: "https://picsum.photos/700",
-        }}
-      />
+      {imgUrl ? (
+        <Image
+          style={styles.image}
+          source={{
+            uri: imgUrl,
+          }}
+        />
+      ) : null}
       <View style={styles.cardText}>
         <Text style={{ ...styles.header, color: colors.text }}>{title}</Text>
         <Text style={{ color: colors.text }}>{description}</Text>
