@@ -30,7 +30,7 @@ export default function ServicesOverviewCard({
       activeOpacity={1}
       onPress={() =>
         navigation.navigate("ServiceDetails", {
-          service: { name, description, id, geopoint },
+          serviceId: id || "",
         })
       }
     >

@@ -23,7 +23,7 @@ export type RootStackParamList = {
   Modal: undefined;
   NotFound: undefined;
   NewsDetails: { news: Partial<News> };
-  ServiceDetails: { service: Partial<Service> };
+  ServiceDetails: { serviceId: string };
   AddService: undefined;
   FindService: undefined;
   SetActiveService: undefined;

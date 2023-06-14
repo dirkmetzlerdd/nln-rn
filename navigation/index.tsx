@@ -19,6 +19,7 @@ import { useColorScheme } from "react-native";
 import Account from "../screens/account";
 import AddService from "../screens/addService";
 import ServiceDetails from "../screens/serviceDetails";
+import { Text } from "react-native-paper";
 
 const vintageYellow = "#feda6a";
 const silverFox = "#d4d4dc";
@@ -86,7 +87,18 @@ function RootNavigator() {
         component={ServiceDetails}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name="AddService" component={AddService} />
+      <Stack.Screen
+        name="AddService"
+        component={AddService}
+        options={{
+          headerShown: false,
+          // header: () => (
+          //   <View style={{ height: 300, backgroundColor: "black" }}>
+          //     <Text>TEST</Text>
+          //   </View>
+          // ),
+        }}
+      />
       <Stack.Screen name="FindService" component={NotFound} />
       <Stack.Screen name="SetActiveService" component={NotFound} />
       <Stack.Screen name="Account" component={Account} />

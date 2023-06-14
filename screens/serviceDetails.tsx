@@ -8,20 +8,40 @@ import {
 } from "react-native";
 import { StackScreenProps } from "../types";
 import { useTheme } from "@react-navigation/native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Divider } from "react-native-paper";
 import ServiceDetailsAboutTab from "../components/serviceDetailsAboutTab";
 import ServiceDetailsNewsTab from "../components/serviceDetailsNewsTab";
+import { doc, getDoc } from "firebase/firestore";
+import { initialize } from "../firebase/main";
+import { DB_COLS } from "../types/main";
+import { Service } from "../types/service";
+
+const { firestore } = initialize();
 
 export default function ServiceDetails({
   route,
 }: StackScreenProps<"ServiceDetails">) {
   const [activeTab, setActiveTab] = useState<"about" | "news">("about");
-  const { service } = route?.params;
+  const { serviceId } = route?.params;
+  const [service, setService] = useState<Service | null>(null);
   const { colors } = useTheme();
+
+  useEffect(() => {
+    (async function () {
+      const res = await getDoc(doc(firestore, DB_COLS.service, serviceId));
+      const fetchedService = {
+        id: res.id,
+        ...res.data(),
+      } as Service;
+
+      setService(fetchedService);
+    })();
+  }, []);
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.card }}>
+      <Text>{serviceId}</Text>
       <ScrollView style={{ flex: 1 }}>
         <Image
           style={styles.image}
@@ -60,8 +80,10 @@ export default function ServiceDetails({
           </TouchableOpacity>
         </View>
         <Divider />
-        {activeTab === "about" && <ServiceDetailsAboutTab service={service} />}
-        {activeTab === "news" && (
+        {activeTab === "about" && service && (
+          <ServiceDetailsAboutTab service={service} />
+        )}
+        {activeTab === "news" && service && (
           <ServiceDetailsNewsTab serviceId={service.id} />
         )}
       </ScrollView>

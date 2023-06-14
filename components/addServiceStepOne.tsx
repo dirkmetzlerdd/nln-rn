@@ -1,7 +1,7 @@
 import { useEffect, useReducer, useState } from "react";
 import { SafeAreaView, View } from "react-native";
 import { Button, Text } from "react-native-paper";
-import { useTheme } from "@react-navigation/native";
+import { useNavigation, useTheme } from "@react-navigation/native";
 import { NewService } from "../types/service";
 import { GeoPoint } from "firebase/firestore";
 import { mainStyle } from "../style/main";
@@ -44,6 +44,7 @@ export default function AddServiceStepOne() {
   >("initial");
   const { colors } = useTheme();
   const { location } = useAuthContext();
+  const navigation = useNavigation();
 
   const getDispatch = (key: string) => (v: string | number) =>
     dispatch({
@@ -189,6 +190,11 @@ export default function AddServiceStepOne() {
               if (errors.length === 0) {
                 (async function () {
                   const id = await addService(state);
+                  if (id) {
+                    navigation.navigate("ServiceDetails", {
+                      serviceId: id,
+                    });
+                  }
                 })();
               }
             }}
