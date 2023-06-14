@@ -1,7 +1,7 @@
 import { View, StyleSheet } from "react-native";
 import { initialize } from "../firebase/main";
 import { useAuthContext } from "../context/authContext";
-import { useTheme } from "@react-navigation/native";
+import { useNavigation, useTheme } from "@react-navigation/native";
 import { signOut } from "firebase/auth";
 import ListItem, { ListItemProps } from "./listItem";
 
@@ -10,11 +10,18 @@ const { auth } = initialize();
 export default function AccountData() {
   const { user } = useAuthContext();
   const { colors } = useTheme();
+  const navigation = useNavigation();
 
   const data: Array<ListItemProps> = [
     { label: user?.email || "", iconName: undefined, showBottomDivider: true },
     { label: "Notifications", iconName: "right", showBottomDivider: true },
     { label: "My NLN", iconName: "right", showBottomDivider: true },
+    {
+      label: "Add new service",
+      iconName: "right",
+      showBottomDivider: true,
+      onPress: () => navigation.navigate("AddService"),
+    },
     { label: "Invite", iconName: "right", showBottomDivider: true },
     { label: "Sign Out", iconName: "right", onPress: () => signOut(auth) },
   ];

@@ -21,10 +21,12 @@ export const AuthContext = createContext<{
   user: Partial<Profile> | null;
   news: Array<News>;
   services: Array<Service>;
+  location: Location.LocationObject | null;
 }>({
   user: null,
   news: [],
   services: [],
+  location: null,
 });
 
 export const useAuthContext = () => React.useContext(AuthContext);
@@ -34,6 +36,8 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = React.useState<Partial<Profile> | null>(null);
   const [news, setNews] = React.useState<Array<News>>([]);
   const [services, setServices] = React.useState<Array<Service>>([]);
+  const [location, setLocation] =
+    React.useState<Location.LocationObject | null>(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (authUser) => {
@@ -97,20 +101,24 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
         return;
       }
 
-      let location = await Location.getCurrentPositionAsync({});
+      let currentLocation = await Location.getCurrentPositionAsync({});
       console.log("location");
-      console.log(location);
-      const center = [51.5074, 0.1278];
-      const radiusInM = 50 * 1000;
+      console.log("location");
+      console.log("location");
+      console.log("location");
+      console.log(currentLocation);
+      setLocation(currentLocation);
+      // const center = [51.5074, 0.1278];
+      // const radiusInM = 50 * 1000;
 
-      const bounds = geofire.geohashQueryBounds(center, radiusInM);
-      console.log("bounds");
-      console.log(bounds);
+      // const bounds = geofire.geohashQueryBounds(center, radiusInM);
+      // console.log("bounds");
+      // console.log(bounds);
     })();
-  });
+  }, []);
 
   return (
-    <AuthContext.Provider value={{ user, news, services }}>
+    <AuthContext.Provider value={{ user, news, services, location }}>
       {children}
     </AuthContext.Provider>
   );

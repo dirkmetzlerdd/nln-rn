@@ -1,9 +1,13 @@
-import { View, Text } from "react-native";
+import { ScrollView, View } from "react-native";
+import AddServiceStepOne from "../components/addServiceStepOne";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function AddService() {
   return (
-    <View style={{ flex: 1, marginHorizontal: 10 }}>
-      <Text>Add service</Text>
-    </View>
+    <SafeAreaView style={{ flex: 1 }}>
+      <ScrollView style={{ flex: 1 }}>
+        <AddServiceStepOne />
+      </ScrollView>
+    </SafeAreaView>
   );
 }

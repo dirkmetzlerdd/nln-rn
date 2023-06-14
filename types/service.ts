@@ -8,6 +8,11 @@ export type Service = {
   ownerUid: string;
   adminUids: Array<string>;
   geopoint: GeoPoint;
+  latitude: number;
+  longitude: number;
+  city: string;
+  zipCode: string;
+  country: string;
 };
 
 export type NewService = Omit<
