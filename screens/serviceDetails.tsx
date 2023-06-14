@@ -16,15 +16,16 @@ import { doc, getDoc } from "firebase/firestore";
 import { initialize } from "../firebase/main";
 import { DB_COLS } from "../types/main";
 import { Service } from "../types/service";
+import Tabs from "../components/tabs";
 
 const { firestore } = initialize();
 
 export default function ServiceDetails({
   route,
 }: StackScreenProps<"ServiceDetails">) {
-  const [activeTab, setActiveTab] = useState<"about" | "news">("about");
-  const { serviceId } = route?.params;
+  const [activeTab, setActiveTab] = useState<string>("About");
   const [service, setService] = useState<Service | null>(null);
+  const { serviceId } = route?.params;
   const { colors } = useTheme();
 
   useEffect(() => {
@@ -49,41 +50,17 @@ export default function ServiceDetails({
             uri: "https://picsum.photos/700",
           }}
         />
-        <View style={styles.tabContainer}>
-          <TouchableOpacity
-            style={styles.tab}
-            onPress={() => setActiveTab("about")}
-          >
-            <Text
-              style={{
-                color: activeTab === "about" ? colors.text : "grey",
-                textAlign: "center",
-                fontSize: 20,
-              }}
-            >
-              About
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.tab}
-            onPress={() => setActiveTab("news")}
-          >
-            <Text
-              style={{
-                color: activeTab === "news" ? colors.text : "grey",
-                textAlign: "center",
-                fontSize: 20,
-              }}
-            >
-              News
-            </Text>
-          </TouchableOpacity>
-        </View>
+        <Tabs
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          tab1="About"
+          tab2="News"
+        />
         <Divider />
-        {activeTab === "about" && service && (
+        {activeTab === "About" && service && (
           <ServiceDetailsAboutTab service={service} />
         )}
-        {activeTab === "news" && service && (
+        {activeTab === "News" && service && (
           <ServiceDetailsNewsTab serviceId={service.id} />
         )}
       </ScrollView>

@@ -132,6 +132,21 @@ export default function NewsList() {
       >
         <Icon name="filter" size={30} color={colors.text} />
       </TouchableOpacity>
+      <TouchableOpacity
+        style={{
+          top: 125,
+          right: 12,
+          position: "absolute",
+          backgroundColor: colors.card,
+          padding: 15,
+          borderRadius: 50,
+          borderColor: colors.text,
+          borderWidth: 1,
+        }}
+        onPress={() => setVisible(!visible)}
+      >
+        <Icon name="plus" size={30} color={colors.text} />
+      </TouchableOpacity>
     </SafeAreaView>
   );
 }

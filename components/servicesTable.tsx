@@ -6,11 +6,12 @@ import { useState, useEffect } from "react";
 import { collection, onSnapshot } from "firebase/firestore";
 import { initialize } from "../firebase/main";
 import { DB_COLS } from "../types/main";
+import { getMyServices } from "../firebase/service";
 
 const { firestore } = initialize();
 
 type ServicesTableProps = {
-  mode: "search" | "nearby";
+  mode: "search" | "nearby" | "my";
 };
 
 export default function ServicesTable({ mode }: ServicesTableProps) {
@@ -18,14 +19,23 @@ export default function ServicesTable({ mode }: ServicesTableProps) {
   const { colors } = useTheme();
 
   useEffect(() => {
-    // TODO snapshot here??
-    onSnapshot(collection(firestore, DB_COLS.service), (snapshot) => {
-      const result: Array<Service> = snapshot.docs.map((item) => {
-        return { id: item.id, ...item.data() } as Service;
-      });
+    if (mode === "my") {
+      (async function () {
+        const result = await getMyServices();
+        setServices(result || []);
+      })();
+    }
 
-      setServices(result);
-    });
+    if (mode === "nearby") {
+      // TODO snapshot here??
+      onSnapshot(collection(firestore, DB_COLS.service), (snapshot) => {
+        const result: Array<Service> = snapshot.docs.map((item) => {
+          return { id: item.id, ...item.data() } as Service;
+        });
+
+        setServices(result);
+      });
+    }
   }, []);
 
   if (!services.length) return null;
