@@ -7,7 +7,6 @@ export type Service = {
   createdAt: number;
   ownerUid: string;
   adminUids: Array<string>;
-  geopoint: GeoPoint;
   latitude: number;
   longitude: number;
   city: string;

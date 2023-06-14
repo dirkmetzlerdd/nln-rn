@@ -28,4 +28,6 @@ export async function addService(service: NewService) {
     ownerUid: auth.currentUser.uid,
     adminUids: [auth.currentUser.uid],
   });
+
+  return docRef.id;
 }

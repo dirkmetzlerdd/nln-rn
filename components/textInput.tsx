@@ -8,27 +8,37 @@ import { GeoPoint } from "firebase/firestore";
 import { mainStyle } from "../style/main";
 
 type TextInputProps = {
+  id: string;
   value: string;
   label: string;
   onChangeText: (v: string) => void;
+  removeKeyFromErrorKeys: (v: string) => void;
   multiline?: boolean;
+  error?: boolean;
 };
 
 export default function TextInputComponent({
+  id,
   value,
   label,
   onChangeText,
+  removeKeyFromErrorKeys,
   multiline,
+  error,
 }: TextInputProps) {
   const { colors } = useTheme();
 
   return (
     <TextInput
+      error={error}
       mode="outlined"
       label={label}
       placeholder=""
       value={value}
-      onChangeText={onChangeText}
+      onChangeText={(v) => {
+        if (error) removeKeyFromErrorKeys(id);
+        onChangeText(v);
+      }}
       right={<TextInput.Affix />}
       style={{ marginTop: 10 }}
       textColor={colors.text}
