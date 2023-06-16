@@ -23,7 +23,7 @@ export default function NewsDetails({
         <Image
           style={styles.image}
           source={{
-            uri: "https://picsum.photos/700",
+            uri: news.imgUrl,
           }}
         />
         <View style={styles.contentWrapper}>

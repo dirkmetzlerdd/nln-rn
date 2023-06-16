@@ -8,18 +8,22 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { Service } from "../types/service";
-import Map from "./map";
 import SubscribeLabel from "./subscribeLabel";
 import { mainStyle } from "../style/main";
+import { GeoPoint } from "firebase/firestore";
+import Map from "./map";
 
 export default function ServicesOverviewCard({
   name,
   description,
   id,
-  geopoint,
+  latitude,
+  longitude,
+  imgUrl,
 }: Partial<Service>) {
   const { colors } = useTheme();
   const navigation = useNavigation();
+  const coords = new GeoPoint(latitude || 0, longitude || 0);
 
   return (
     <TouchableOpacity
@@ -34,7 +38,7 @@ export default function ServicesOverviewCard({
         })
       }
     >
-      {geopoint ? <Map geopoint={geopoint} pointerEvents="none" /> : null}
+      {coords ? <Map geopoint={coords} pointerEvents="none" /> : null}
       <View
         style={{
           ...styles.wrapper,
@@ -44,7 +48,7 @@ export default function ServicesOverviewCard({
         <Image
           style={styles.image}
           source={{
-            uri: "https://picsum.photos/700",
+            uri: imgUrl,
           }}
         />
         <View

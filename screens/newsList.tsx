@@ -143,7 +143,7 @@ export default function NewsList() {
           borderColor: colors.text,
           borderWidth: 1,
         }}
-        onPress={() => setVisible(!visible)}
+        onPress={() => navigation.navigate("AddNews")}
       >
         <Icon name="plus" size={30} color={colors.text} />
       </TouchableOpacity>

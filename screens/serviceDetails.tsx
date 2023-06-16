@@ -1,11 +1,4 @@
-import {
-  View,
-  ScrollView,
-  StyleSheet,
-  Image,
-  Text,
-  TouchableOpacity,
-} from "react-native";
+import { View, ScrollView, StyleSheet, Image, Text } from "react-native";
 import { StackScreenProps } from "../types";
 import { useTheme } from "@react-navigation/native";
 import { useEffect, useState } from "react";
@@ -47,7 +40,7 @@ export default function ServiceDetails({
         <Image
           style={styles.image}
           source={{
-            uri: "https://picsum.photos/700",
+            uri: service?.imgUrl,
           }}
         />
         <Tabs

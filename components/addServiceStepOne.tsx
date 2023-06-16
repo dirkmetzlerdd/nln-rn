@@ -96,116 +96,114 @@ export default function AddServiceStepOne() {
   }, [addressCheck]);
 
   return (
-    <SafeAreaView style={{ flex: 1, justifyContent: "center" }}>
-      <View>
-        <View style={{ padding: 10, paddingTop: 0 }}>
-          <Text
+    <View>
+      <View style={{ padding: 10, paddingTop: 0 }}>
+        <Text
+          style={{
+            fontSize: mainStyle.fontXL,
+            marginTop: 10,
+            fontWeight: "bold",
+            flex: 1,
+            alignSelf: "center",
+            marginBottom: 20,
+          }}
+        >
+          New service
+        </Text>
+
+        <ImagePickerComp setImgUrl={setImgUrl} />
+
+        {fields.map((item) => (
+          <TextInputComponent
+            key={item.id}
+            id={item.id}
+            label={item.label}
+            value={item.value}
+            onChangeText={item.onChangeText}
+            multiline={item.multiline}
+            error={errorKeys.includes(item.id)}
+            removeKeyFromErrorKeys={removeKeyFromErrorKeys}
+          />
+        ))}
+
+        {addressCheck === false ? (
+          <View
             style={{
-              fontSize: mainStyle.fontXL,
-              marginTop: 10,
-              fontWeight: "bold",
-              flex: 1,
+              paddingLeft: 10,
+              paddingRight: 10,
+              paddingTop: 10,
+              display: "flex",
               alignSelf: "center",
-              marginBottom: 20,
             }}
           >
-            New service
-          </Text>
-
-          <ImagePickerComp setImgUrl={setImgUrl} />
-
-          {fields.map((item) => (
-            <TextInputComponent
-              key={item.id}
-              id={item.id}
-              label={item.label}
-              value={item.value}
-              onChangeText={item.onChangeText}
-              multiline={item.multiline}
-              error={errorKeys.includes(item.id)}
-              removeKeyFromErrorKeys={removeKeyFromErrorKeys}
-            />
-          ))}
-
-          {addressCheck === false ? (
-            <View
-              style={{
-                paddingLeft: 10,
-                paddingRight: 10,
-                paddingTop: 10,
-                display: "flex",
-                alignSelf: "center",
-              }}
-            >
-              <Text style={{ fontSize: mainStyle.fontL }}>
-                Location Not found
-              </Text>
-            </View>
-          ) : null}
-
-          {![state.city, state.country, state.zipCode].includes("") ? (
-            <Button
-              mode="contained"
-              onPress={() => setAddressCheck("pending")}
-              style={{
-                marginTop: 10,
-                backgroundColor: colors.card,
-                borderColor: colors.primary,
-                borderWidth: 1,
-              }}
-            >
-              <Text
-                style={{
-                  color: colors.primary,
-                }}
-              >
-                Show Service Location
-              </Text>
-            </Button>
-          ) : null}
-        </View>
-        {addressCheck === true ? (
-          <View style={{ marginBottom: 10 }}>
-            <Map
-              height={300}
-              pointerEvents="auto"
-              geopoint={new GeoPoint(state.latitude, state.longitude)}
-            />
+            <Text style={{ fontSize: mainStyle.fontL }}>
+              Location Not found
+            </Text>
           </View>
         ) : null}
 
-        <View style={{ paddingLeft: 10, paddingRight: 10, marginBottom: 10 }}>
+        {![state.city, state.country, state.zipCode].includes("") ? (
           <Button
             mode="contained"
+            onPress={() => setAddressCheck("pending")}
             style={{
-              backgroundColor: addressCheck ? colors.primary : "grey",
-            }}
-            disabled={addressCheck !== true}
-            onPress={() => {
-              const errors = validateState(state);
-              setErrorKeys(errors);
-              if (errors.length === 0) {
-                (async function () {
-                  const id = await addService({ ...state, imgUrl });
-                  if (id) {
-                    navigation.navigate("ServiceDetails", {
-                      serviceId: id,
-                    });
-                  }
-                })();
-              }
+              marginTop: 10,
+              backgroundColor: colors.card,
+              borderColor: colors.primary,
+              borderWidth: 1,
             }}
           >
             <Text
               style={{
-                color: colors.background,
+                color: colors.primary,
               }}
             >
-              Save New Service
+              Show Service Location
             </Text>
           </Button>
-        </View>
+        ) : null}
       </View>
-    </SafeAreaView>
+      {addressCheck === true ? (
+        <View style={{ marginBottom: 10 }}>
+          <Map
+            height={300}
+            pointerEvents="auto"
+            geopoint={new GeoPoint(state.latitude, state.longitude)}
+          />
+        </View>
+      ) : null}
+
+      <View style={{ paddingLeft: 10, paddingRight: 10, marginBottom: 10 }}>
+        <Button
+          mode="contained"
+          style={{
+            backgroundColor: addressCheck ? colors.primary : "grey",
+          }}
+          disabled={addressCheck !== true}
+          onPress={() => {
+            const errors = validateState(state);
+            setErrorKeys(errors);
+            if (errors.length === 0) {
+              (async function () {
+                const id = await addService({ ...state, imgUrl });
+                if (id) {
+                  navigation.navigate("ServiceDetails", {
+                    serviceId: id,
+                  });
+                }
+              })();
+            }
+          }}
+        >
+          <Text
+            style={{
+              color: colors.background,
+            }}
+          >
+            Save New Service
+          </Text>
+        </Button>
+      </View>
+    </View>
   );
 }

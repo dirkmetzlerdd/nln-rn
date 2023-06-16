@@ -13,7 +13,6 @@ import { DB_COLS } from "../types/main";
 import { News } from "../types/news";
 import { Service } from "../types/service";
 import * as Location from "expo-location";
-const geofire = require("geofire-common");
 
 const { auth, firestore } = initialize();
 
@@ -102,18 +101,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
       }
 
       let currentLocation = await Location.getCurrentPositionAsync({});
-      console.log("location");
-      console.log("location");
-      console.log("location");
-      console.log("location");
-      console.log(currentLocation);
       setLocation(currentLocation);
-      // const center = [51.5074, 0.1278];
-      // const radiusInM = 50 * 1000;
-
-      // const bounds = geofire.geohashQueryBounds(center, radiusInM);
-      // console.log("bounds");
-      // console.log(bounds);
     })();
   }, []);
 

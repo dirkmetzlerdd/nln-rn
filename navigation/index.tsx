@@ -20,6 +20,7 @@ import Account from "../screens/account";
 import AddService from "../screens/addService";
 import ServiceDetails from "../screens/serviceDetails";
 import { Text } from "react-native-paper";
+import AddNews from "../screens/addNews";
 
 const vintageYellow = "#feda6a";
 const silverFox = "#d4d4dc";
@@ -92,11 +93,13 @@ function RootNavigator() {
         component={AddService}
         options={{
           headerShown: false,
-          // header: () => (
-          //   <View style={{ height: 300, backgroundColor: "black" }}>
-          //     <Text>TEST</Text>
-          //   </View>
-          // ),
+        }}
+      />
+      <Stack.Screen
+        name="AddNews"
+        component={AddNews}
+        options={{
+          headerShown: false,
         }}
       />
       <Stack.Screen name="FindService" component={NotFound} />

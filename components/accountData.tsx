@@ -22,6 +22,12 @@ export default function AccountData() {
       showBottomDivider: true,
       onPress: () => navigation.navigate("AddService"),
     },
+    {
+      label: "Add news",
+      iconName: "right",
+      showBottomDivider: true,
+      onPress: () => navigation.navigate("AddNews"),
+    },
     { label: "Invite", iconName: "right", showBottomDivider: true },
     { label: "Sign Out", iconName: "right", onPress: () => signOut(auth) },
   ];

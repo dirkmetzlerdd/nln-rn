@@ -25,6 +25,7 @@ export type RootStackParamList = {
   NewsDetails: { news: Partial<News> };
   ServiceDetails: { serviceId: string };
   AddService: undefined;
+  AddNews: undefined;
   FindService: undefined;
   SetActiveService: undefined;
   Account: undefined;

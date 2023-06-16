@@ -1,10 +1,17 @@
 import React, { useState, Dispatch } from "react";
-import { Image, View, TouchableOpacity, Alert, StyleSheet } from "react-native";
+import {
+  Image,
+  View,
+  TouchableOpacity,
+  Alert,
+  StyleSheet,
+  Dimensions,
+} from "react-native";
 import * as ImagePicker from "expo-image-picker";
-import { Button } from "react-native-paper";
+import { Button, Text } from "react-native-paper";
 import { useTheme } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/AntDesign";
-import { Avatar } from "react-native-paper";
+import { Avatar, ProgressBar, MD3Colors } from "react-native-paper";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { initialize } from "../firebase/main";
 import { useAuthContext } from "../context/authContext";
@@ -17,12 +24,15 @@ type ImageUploadProps = {
 };
 
 export default function ImagePickerComp({ setImgUrl }: ImageUploadProps) {
+  const { width } = Dimensions.get("window");
   const { colors } = useTheme();
   const { user } = useAuthContext();
+  const [progress, setProgress] = useState(0);
   const [selectedImage, setSelectedImage] =
     useState<ImagePicker.ImagePickerResult | null>(null);
 
   const pickImage = async () => {
+    reset();
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
     if (status !== "granted") {
@@ -41,7 +51,6 @@ export default function ImagePickerComp({ setImgUrl }: ImageUploadProps) {
 
     if (!result.canceled) {
       setSelectedImage(result);
-      uploadImage();
     }
   };
 
@@ -60,7 +69,7 @@ export default function ImagePickerComp({ setImgUrl }: ImageUploadProps) {
         const progress = Math.round(
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100
         );
-        console.log(progress);
+        setProgress(progress);
       },
       (error) => {
         console.log(error);
@@ -72,6 +81,12 @@ export default function ImagePickerComp({ setImgUrl }: ImageUploadProps) {
         });
       }
     );
+  };
+
+  const reset = () => {
+    setProgress(0);
+    setSelectedImage(null);
+    setImgUrl("");
   };
 
   return (
@@ -93,9 +108,10 @@ export default function ImagePickerComp({ setImgUrl }: ImageUploadProps) {
           />
         </TouchableOpacity>
       )}
-      {selectedImage ? (
+
+      {progress === 100 ? (
         <TouchableOpacity
-          onPress={() => setSelectedImage(null)}
+          onPress={reset}
           style={{
             backgroundColor: colors.card,
             borderColor: colors.text,
@@ -105,13 +121,43 @@ export default function ImagePickerComp({ setImgUrl }: ImageUploadProps) {
           <Icon name="close" size={30} color={colors.text} />
         </TouchableOpacity>
       ) : null}
-      <Button onPress={uploadImage}>GO</Button>
+
+      {selectedImage && progress !== 100 ? (
+        <View style={{ display: "flex", flexDirection: "row", marginTop: 10 }}>
+          <TouchableOpacity
+            onPress={reset}
+            style={{
+              backgroundColor: colors.card,
+              borderColor: colors.text,
+              ...styles.uploadButton,
+            }}
+          >
+            <Icon name="close" size={30} color="red" />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={uploadImage}
+            style={{
+              backgroundColor: colors.card,
+              borderColor: colors.text,
+              ...styles.uploadButton,
+            }}
+          >
+            <Icon name="check" size={30} color="green" />
+          </TouchableOpacity>
+        </View>
+      ) : null}
+
+      <ProgressBar
+        style={{ height: 3, width: width, marginTop: 10 }}
+        progress={progress}
+        color={colors.primary}
+      />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, alignItems: "center", justifyContent: "center" },
+  container: { alignItems: "center" },
   resetButton: {
     top: 0,
     right: 10,
@@ -119,5 +165,11 @@ const styles = StyleSheet.create({
     padding: 5,
     borderRadius: 50,
     borderWidth: 1,
+  },
+  uploadButton: {
+    padding: 5,
+    borderRadius: 50,
+    borderWidth: 1,
+    margin: 5,
   },
 });

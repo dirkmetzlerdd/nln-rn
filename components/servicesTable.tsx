@@ -50,15 +50,19 @@ export default function ServicesTable({ mode }: ServicesTableProps) {
       >
         Nearby:
       </Text>
-      {services.map(({ name, description, id, geopoint }) => (
-        <ServicesOverviewCard
-          name={name}
-          description={description}
-          id={id}
-          key={id}
-          geopoint={geopoint}
-        />
-      ))}
+      {services.map(
+        ({ name, description, id, imgUrl, latitude, longitude }) => (
+          <ServicesOverviewCard
+            name={name}
+            description={description}
+            id={id}
+            key={id}
+            imgUrl={imgUrl}
+            latitude={latitude}
+            longitude={longitude}
+          />
+        )
+      )}
     </View>
   );
 }
