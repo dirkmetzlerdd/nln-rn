@@ -1,18 +1,19 @@
-import { useEffect, useReducer, useState } from "react";
+import { Reducer, useEffect, useReducer, useState } from "react";
 import { SafeAreaView, View } from "react-native";
 import { Button, Text } from "react-native-paper";
 import { useNavigation, useTheme } from "@react-navigation/native";
-import { NewService } from "../types/service";
+import { NewServiceState } from "../types/service";
 import { GeoPoint } from "firebase/firestore";
 import { mainStyle } from "../style/main";
 import TextInputComponent from "../components/textInput";
 import { getGeoPointFromAddress } from "../utils/geopoint";
-import Map from "./map";
-import { useAuthContext } from "../context/authContext";
 import { validateState } from "../utils/validateState";
 import { addService } from "../firebase/service";
+import ImagePickerComp from "./imagePicker";
+import { textInputReducer } from "../reducer/textInputReducer";
+import Map from "./map";
 
-const initialState: NewService = {
+const initialState: NewServiceState = {
   name: "",
   description: "",
   city: "",
@@ -22,29 +23,19 @@ const initialState: NewService = {
   longitude: 0,
 };
 
-function reducer(
-  state: NewService,
-  action: { type: string; payload: { key: string; value: string | number } }
-) {
-  if (action.type === "update") {
-    const { key, value } = action.payload;
-    return {
-      ...state,
-      [key]: value,
-    };
-  }
-  return state;
-}
-
 export default function AddServiceStepOne() {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer<Reducer<NewServiceState, any>>(
+    textInputReducer,
+    initialState
+  );
+
   const [errorKeys, setErrorKeys] = useState<Array<string>>([]);
+  const [imgUrl, setImgUrl] = useState<string>("");
+  const { colors } = useTheme();
+  const navigation = useNavigation();
   const [addressCheck, setAddressCheck] = useState<
     boolean | "pending" | "initial"
   >("initial");
-  const { colors } = useTheme();
-  const { location } = useAuthContext();
-  const navigation = useNavigation();
 
   const getDispatch = (key: string) => (v: string | number) =>
     dispatch({
@@ -113,10 +104,16 @@ export default function AddServiceStepOne() {
               fontSize: mainStyle.fontXL,
               marginTop: 10,
               fontWeight: "bold",
+              flex: 1,
+              alignSelf: "center",
+              marginBottom: 20,
             }}
           >
-            Add New service
+            New service
           </Text>
+
+          <ImagePickerComp setImgUrl={setImgUrl} />
+
           {fields.map((item) => (
             <TextInputComponent
               key={item.id}
@@ -170,8 +167,8 @@ export default function AddServiceStepOne() {
         {addressCheck === true ? (
           <View style={{ marginBottom: 10 }}>
             <Map
-              pointerEvents="auto"
               height={300}
+              pointerEvents="auto"
               geopoint={new GeoPoint(state.latitude, state.longitude)}
             />
           </View>
@@ -189,7 +186,7 @@ export default function AddServiceStepOne() {
               setErrorKeys(errors);
               if (errors.length === 0) {
                 (async function () {
-                  const id = await addService(state);
+                  const id = await addService({ ...state, imgUrl });
                   if (id) {
                     navigation.navigate("ServiceDetails", {
                       serviceId: id,

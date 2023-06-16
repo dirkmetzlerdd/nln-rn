@@ -12,9 +12,12 @@ export type Service = {
   city: string;
   zipCode: string;
   country: string;
+  imgUrl: string;
 };
 
 export type NewService = Omit<
   Service,
   "createdAt" | "id" | "adminUids" | "ownerUid"
 >;
+
+export type NewServiceState = Omit<NewService, "imgUrl">;
