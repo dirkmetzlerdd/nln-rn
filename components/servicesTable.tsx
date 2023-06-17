@@ -6,15 +6,19 @@ import { useState, useEffect } from "react";
 import { collection, onSnapshot } from "firebase/firestore";
 import { initialize } from "../firebase/main";
 import { DB_COLS } from "../types/main";
-import { getMyServices } from "../firebase/service";
+import { findServiceByname, getMyServices } from "../firebase/service";
 
 const { firestore } = initialize();
 
 type ServicesTableProps = {
   mode: "search" | "nearby" | "my";
+  searchQuery: string;
 };
 
-export default function ServicesTable({ mode }: ServicesTableProps) {
+export default function ServicesTable({
+  mode,
+  searchQuery,
+}: ServicesTableProps) {
   const [services, setServices] = useState<Array<Service>>([]);
   const { colors } = useTheme();
 
@@ -36,7 +40,16 @@ export default function ServicesTable({ mode }: ServicesTableProps) {
         setServices(result);
       });
     }
-  }, []);
+  }, [mode]);
+
+  useEffect(() => {
+    if (mode === "search") {
+      (async function () {
+        const result = await findServiceByname(searchQuery);
+        setServices(result || []);
+      })();
+    }
+  }, [searchQuery]);
 
   if (!services.length) return null;
 

@@ -48,3 +48,23 @@ export async function getMyServices(): Promise<Array<Service> | undefined> {
 
   return services;
 }
+
+export const findServiceByname = async (
+  searchQuery: string
+): Promise<Array<Service>> => {
+  const colRef = collection(firestore, DB_COLS.service);
+  const querySnapshot = await getDocs(
+    query(colRef, where("name", "==", searchQuery))
+  );
+
+  const res: Array<Service> = [];
+
+  querySnapshot.forEach((item) => {
+    res.push({
+      id: item.id,
+      ...item.data(),
+    } as Service);
+  });
+
+  return res;
+};

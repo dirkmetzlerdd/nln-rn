@@ -52,7 +52,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     return () => unsubscribe();
   }, []);
 
-  useEffect(() => {
+  const loadNews = async () => {
     if (
       !user ||
       !user.subscribedToServices ||
@@ -60,36 +60,38 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     ) {
       setNews([]);
     } else {
-      (async () => {
-        const fetchedNews: Array<News> = [];
-        const fetchedServices: Array<Service> = [];
+      const fetchedNews: Array<News> = [];
+      const fetchedServices: Array<Service> = [];
 
+      // @ts-ignore
+      for (let i = 0; i < user.subscribedToServices.length; ++i) {
         // @ts-ignore
-        for (let i = 0; i < user.subscribedToServices.length; ++i) {
-          // @ts-ignore
-          const serviceId = user.subscribedToServices[i];
+        const serviceId = user.subscribedToServices[i];
 
-          const service = await getDoc(
-            doc(firestore, DB_COLS.service, serviceId)
-          );
-          fetchedServices.push({
-            id: service.id,
-            ...service.data(),
-          } as Service);
+        const service = await getDoc(
+          doc(firestore, DB_COLS.service, serviceId)
+        );
+        fetchedServices.push({
+          id: service.id,
+          ...service.data(),
+        } as Service);
 
-          const snapshot = await getDocs(
-            collection(firestore, `service/${serviceId}/news`)
-          );
+        const snapshot = await getDocs(
+          collection(firestore, `service/${serviceId}/news`)
+        );
 
-          snapshot.forEach((doc) => {
-            fetchedNews.push({ id: doc.id, serviceId, ...doc.data() } as News);
-          });
-        }
+        snapshot.forEach((doc) => {
+          fetchedNews.push({ id: doc.id, serviceId, ...doc.data() } as News);
+        });
+      }
 
-        setNews(fetchedNews);
-        setServices(fetchedServices);
-      })();
+      setNews(fetchedNews);
+      setServices(fetchedServices);
     }
+  };
+
+  useEffect(() => {
+    loadNews();
   }, [user]);
 
   useEffect(() => {

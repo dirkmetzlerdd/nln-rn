@@ -87,7 +87,7 @@ export default function AddNews() {
           >
             News
           </Text>
-          <ImagePickerComp setImgUrl={getDispatch("imgUrl")} />
+          <ImagePickerComp setImgUrl={getDispatch("imgUrl")} imgFullSize />
           <View
             style={{
               backgroundColor: colors.card,
@@ -103,7 +103,7 @@ export default function AddNews() {
                 margin: 10,
               }}
             >
-              Curent Service
+              Current Service
             </Text>
             <RadioButton.Group
               onValueChange={(newValue) => getDispatch("serviceId")(newValue)}

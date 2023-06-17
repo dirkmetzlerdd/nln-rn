@@ -6,6 +6,7 @@ import {
   Alert,
   StyleSheet,
   Dimensions,
+  Pressable,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { Button, Text } from "react-native-paper";
@@ -21,9 +22,13 @@ const { storage } = initialize();
 
 type ImageUploadProps = {
   setImgUrl: Dispatch<string>;
+  imgFullSize?: boolean;
 };
 
-export default function ImagePickerComp({ setImgUrl }: ImageUploadProps) {
+export default function ImagePickerComp({
+  setImgUrl,
+  imgFullSize,
+}: ImageUploadProps) {
   const { width } = Dimensions.get("window");
   const { colors } = useTheme();
   const { user } = useAuthContext();
@@ -92,12 +97,16 @@ export default function ImagePickerComp({ setImgUrl }: ImageUploadProps) {
   return (
     <View style={styles.container}>
       {selectedImage && selectedImage.assets ? (
-        <TouchableOpacity onPress={pickImage}>
+        <Pressable onPress={pickImage}>
           <Image
             source={{ uri: selectedImage.assets[0].uri }}
-            style={{ width: 200, height: 200, borderRadius: 100 }}
+            style={{
+              borderRadius: imgFullSize ? undefined : 100,
+              width: imgFullSize ? width : 200,
+              height: 200,
+            }}
           />
-        </TouchableOpacity>
+        </Pressable>
       ) : (
         <TouchableOpacity onPress={pickImage}>
           <Avatar.Icon
@@ -159,7 +168,7 @@ export default function ImagePickerComp({ setImgUrl }: ImageUploadProps) {
 const styles = StyleSheet.create({
   container: { alignItems: "center" },
   resetButton: {
-    top: 0,
+    top: 15,
     right: 10,
     position: "absolute",
     padding: 5,
