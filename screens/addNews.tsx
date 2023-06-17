@@ -140,7 +140,9 @@ export default function AddNews() {
             }}
             // disabled={addressCheck !== true}
             onPress={() => {
-              const errors = validateState(state);
+              const errors = validateState(state).filter(
+                (key) => key !== "imgUrl"
+              );
               setErrorKeys(errors);
               if (errors.length === 0) {
                 (async function () {

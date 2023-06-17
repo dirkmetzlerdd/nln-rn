@@ -76,6 +76,18 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
           ...service.data(),
         } as Service);
 
+        // TODO: Refcactoring => onSnapshot
+        // onSnapshot(
+        //   collection(firestore, `service/${serviceId}/news`),
+        //   (snapshot) => {
+        //     const result: Array<News> = snapshot.docs.map((item) => {
+        //       return { id: item.id, ...item.data() } as News;
+        //     });
+
+        //     console.log(result.length);
+        //   }
+        // );
+
         const snapshot = await getDocs(
           collection(firestore, `service/${serviceId}/news`)
         );
