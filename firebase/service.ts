@@ -9,12 +9,14 @@ import {
   getDocs,
 } from "firebase/firestore";
 import { initialize } from "./main";
-import { NewService, Service } from "../types/service";
+import { NewServiceState, Service } from "../types/service";
 import { DB_COLS } from "../types/main";
 
 const { auth, firestore } = initialize();
 
-export async function addService(service: NewService) {
+export async function addService(
+  service: NewServiceState & { imgUrl: string }
+) {
   if (!auth?.currentUser) return;
 
   const geopoint = new GeoPoint(

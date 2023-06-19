@@ -1,10 +1,8 @@
 import { useEffect } from "react";
-import { SafeAreaView, StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import { Provider as PaperProvider } from "react-native-paper";
 import Navigation from "./navigation";
 import { AuthContextProvider } from "./context/authContext";
-
-//<MainNav style={styles.card} />
 
 export default function App() {
   useEffect(() => {
@@ -14,16 +12,10 @@ export default function App() {
   return (
     <PaperProvider>
       <AuthContextProvider>
-        <View style={styles.container}>
+        <View style={{ flex: 1 }}>
           <Navigation />
         </View>
       </AuthContextProvider>
     </PaperProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});

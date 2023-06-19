@@ -1,5 +1,5 @@
 import { Reducer, useEffect, useReducer, useState } from "react";
-import { SafeAreaView, View } from "react-native";
+import { View } from "react-native";
 import { Button, Text } from "react-native-paper";
 import { useNavigation, useTheme } from "@react-navigation/native";
 import { NewServiceState } from "../types/service";

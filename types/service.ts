@@ -13,6 +13,7 @@ export type Service = {
   zipCode: string;
   country: string;
   imgUrl: string;
+  geopoint: GeoPoint;
 };
 
 export type NewService = Omit<
@@ -20,4 +21,4 @@ export type NewService = Omit<
   "createdAt" | "id" | "adminUids" | "ownerUid"
 >;
 
-export type NewServiceState = Omit<NewService, "imgUrl">;
+export type NewServiceState = Omit<NewService, "imgUrl" | "geopoint">;

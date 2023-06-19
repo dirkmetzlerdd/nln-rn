@@ -12,7 +12,7 @@ type TextInputProps = {
   value: string;
   label: string;
   onChangeText: (v: string) => void;
-  removeKeyFromErrorKeys: (v: string) => void;
+  removeKeyFromErrorKeys?: (v: string) => void;
   multiline?: boolean;
   error?: boolean;
 };
@@ -36,7 +36,7 @@ export default function TextInputComponent({
       placeholder=""
       value={value}
       onChangeText={(v) => {
-        if (error) removeKeyFromErrorKeys(id);
+        if (error && removeKeyFromErrorKeys) removeKeyFromErrorKeys(id);
         onChangeText(v);
       }}
       right={<TextInput.Affix />}

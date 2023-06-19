@@ -14,13 +14,10 @@ export default function Map({
   height,
   showsUserLocation,
 }: MapProps) {
-  console.log("MAP RERENDER", geopoint.latitude, geopoint.longitude);
   return (
     <MapView
       zoomEnabled={true}
       showsUserLocation={showsUserLocation}
-      // onPress={() => console.log("PRESS")}
-      // onAnnotationPress={() => console.log("PRESS")}
       showsCompass
       style={{ height: height || 200, width: "100%" }}
       pointerEvents={pointerEvents}

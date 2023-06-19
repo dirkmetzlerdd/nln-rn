@@ -8,9 +8,9 @@ import {
 import { Button, Text } from "react-native-paper";
 import { initialize } from "../firebase/main";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { TextInput } from "react-native-paper";
 import { useTheme } from "@react-navigation/native";
 import { addProfile } from "../firebase/user";
+import TextInputComponent from "./textInput";
 
 const { auth } = initialize();
 
@@ -41,57 +41,46 @@ export default function SignUp({ switchMode }: SognUpProps) {
       });
   }
 
+  const fields = [
+    {
+      id: "email",
+      label: "Email",
+      value: email,
+      onChangeText: setEmail,
+    },
+    {
+      id: "firstname",
+      label: "Firstname",
+      value: firstName,
+      onChangeText: setFirstName,
+    },
+    {
+      id: "surname",
+      label: "Surname",
+      value: surname,
+      onChangeText: setSurname,
+    },
+    {
+      id: "password",
+      label: "Password",
+      value: pw,
+      onChangeText: setPw,
+    },
+  ];
+
   return (
     <SafeAreaView style={{ flex: 1, justifyContent: "center" }}>
       <View>
-        <TextInput
-          mode="outlined"
-          label="Email"
-          placeholder=""
-          value={email}
-          onChangeText={setEmail}
-          right={<TextInput.Affix />}
-          style={{ marginTop: 10 }}
-          textColor={colors.text}
-          outlineColor="gray"
-          activeOutlineColor={colors.text}
-        />
-        <TextInput
-          mode="outlined"
-          label="Firstname"
-          placeholder=""
-          value={firstName}
-          onChangeText={setFirstName}
-          right={<TextInput.Affix />}
-          style={{ marginTop: 10 }}
-          textColor={colors.text}
-          outlineColor="gray"
-          activeOutlineColor={colors.text}
-        />
-        <TextInput
-          mode="outlined"
-          label="Surname"
-          placeholder=""
-          value={surname}
-          onChangeText={setSurname}
-          right={<TextInput.Affix />}
-          style={{ marginTop: 10 }}
-          textColor={colors.text}
-          outlineColor="gray"
-          activeOutlineColor={colors.text}
-        />
-        <TextInput
-          mode="outlined"
-          label="Password"
-          placeholder=""
-          value={pw}
-          onChangeText={setPw}
-          right={<TextInput.Affix />}
-          style={{ marginTop: 10 }}
-          textColor={colors.text}
-          outlineColor="gray"
-          activeOutlineColor={colors.text}
-        />
+        {fields.map((item) => (
+          <TextInputComponent
+            key={item.id}
+            id={item.id}
+            label={item.label}
+            value={item.value}
+            onChangeText={item.onChangeText}
+            multiline={false}
+          />
+        ))}
         <Button
           mode="contained"
           onPress={register}

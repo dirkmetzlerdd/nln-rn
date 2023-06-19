@@ -1,11 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  SafeAreaView,
-  View,
-  ScrollView,
-  TouchableOpacity,
-  Pressable,
-} from "react-native";
+import { SafeAreaView, View, ScrollView, Pressable } from "react-native";
 import {
   Modal,
   Portal,
@@ -57,9 +51,8 @@ export default function NewsList() {
               <View style={{ paddingHorizontal: 20 }}>
                 <Divider />
                 {services.map((item) => (
-                  <View>
+                  <View key={item.id}>
                     <Pressable
-                      key={item.id}
                       onPress={() => toggleService(item.id)}
                       style={{
                         backgroundColor: colors.card,
@@ -95,9 +88,8 @@ export default function NewsList() {
             {news
               .filter((item) => activeServices.includes(item.serviceId))
               .map(({ id, imgUrl, text, title, description }) => (
-                <TouchableOpacity
+                <Pressable
                   key={id}
-                  activeOpacity={1}
                   onPress={() =>
                     navigation.navigate("NewsDetails", {
                       news: { id, imgUrl, text, title, description },
@@ -112,12 +104,12 @@ export default function NewsList() {
                     title={title}
                     description={description}
                   />
-                </TouchableOpacity>
+                </Pressable>
               ))}
           </View>
         </ScrollView>
       </Provider>
-      <TouchableOpacity
+      <Pressable
         style={{
           top: 55,
           right: 12,
@@ -131,8 +123,8 @@ export default function NewsList() {
         onPress={() => setVisible(!visible)}
       >
         <Icon name="filter" size={30} color={colors.text} />
-      </TouchableOpacity>
-      <TouchableOpacity
+      </Pressable>
+      <Pressable
         style={{
           top: 125,
           right: 12,
@@ -146,7 +138,7 @@ export default function NewsList() {
         onPress={() => navigation.navigate("AddNews")}
       >
         <Icon name="plus" size={30} color={colors.text} />
-      </TouchableOpacity>
+      </Pressable>
     </SafeAreaView>
   );
 }
