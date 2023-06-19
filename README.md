@@ -12,3 +12,21 @@ Subscribe to local services such as the city council or a local newspaper to rec
  - React Native (Expo)
  - TypeScript
  - Firebase (Auth, Firestore, Storage)
+
+### Setup
+ - Requirements: Node 16 or higher, Google Firebase Account, Expo Go App
+ - clone the repo
+ - create **config.ts** in **/firebase** and save your Firebase Config:
+```
+export const firebaseConfig = {
+  apiKey: "",
+  authDomain: "",
+  projectId: "",
+  storageBucket: "",
+  messagingSenderId: "",
+  appId: "",
+};
+```
+- npm i
+- npm run start
+- Scan the QR code in the terminal with Expo Go (Android) or the Camera app (iOS)
