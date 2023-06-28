@@ -87,12 +87,12 @@ export default function NewsList() {
           <View style={{ flex: 1 }}>
             {news
               .filter((item) => activeServices.includes(item.serviceId))
-              .map(({ id, imgUrl, text, title, description }) => (
+              .map(({ id, imgUrl, text, title, description, createdAt }) => (
                 <Pressable
                   key={id}
                   onPress={() =>
                     navigation.navigate("NewsDetails", {
-                      news: { id, imgUrl, text, title, description },
+                      news: { id, imgUrl, text, title, description, createdAt },
                     })
                   }
                 >
@@ -103,6 +103,7 @@ export default function NewsList() {
                     text={text}
                     title={title}
                     description={description}
+                    createdAt={createdAt}
                   />
                 </Pressable>
               ))}

@@ -18,7 +18,7 @@ type SognInProps = {
 };
 
 export default function SignIn({ switchMode }: SognInProps) {
-  const [email, setEmail] = useState("user1@gmail.com");
+  const [email, setEmail] = useState("user@gmail.com");
   const [pw, setPw] = useState("123456");
   const { colors } = useTheme();
 
@@ -26,6 +26,7 @@ export default function SignIn({ switchMode }: SognInProps) {
     signInWithEmailAndPassword(auth, email, pw)
       .then((userCredential) => {
         const user = userCredential.user;
+        console.log(user);
       })
       .catch((error) => {
         const errorCode = error.code;

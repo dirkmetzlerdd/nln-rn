@@ -27,6 +27,13 @@ export default function NewsDetails({
           }}
         />
         <View style={styles.contentWrapper}>
+          {news.createdAt ? (
+            <View style={styles.createdAt}>
+              <Text style={{ color: colors.secondaryText }}>
+                {news.createdAt.toDate().toLocaleString()}
+              </Text>
+            </View>
+          ) : null}
           <Text style={{ ...styles.header, color: colors.text }}>
             {news.title}
           </Text>
@@ -59,5 +66,10 @@ const styles = StyleSheet.create({
   image: {
     width: "100%",
     height: 300,
+  },
+  createdAt: {
+    marginTop: 10,
+    flexDirection: "row",
+    gap: 10,
   },
 });

@@ -61,7 +61,7 @@ export default function ServicesTable({
           color: colors.text,
         }}
       >
-        Nearby:
+        Recommended:
       </Text>
       {services.map(
         ({ name, description, id, imgUrl, latitude, longitude }) => (

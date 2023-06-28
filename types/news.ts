@@ -1,10 +1,12 @@
+import { Timestamp } from "firebase/firestore";
+
 export type News = {
   id: string;
   authorId: string;
   title: string;
   text: string;
   imgUrl: string;
-  createdAt: number;
+  createdAt: Timestamp;
   description: string;
   serviceId: string;
 };

@@ -8,6 +8,7 @@ export default function NewsPreview({
   title,
   imgUrl,
   description,
+  createdAt,
 }: Partial<News>) {
   const { colors } = useTheme();
 
@@ -29,6 +30,11 @@ export default function NewsPreview({
       <View style={styles.cardText}>
         <Text style={{ ...styles.header, color: colors.text }}>{title}</Text>
         <Text style={{ color: colors.text }}>{description}</Text>
+        {createdAt ? (
+          <Text style={{ ...styles.createdAt, color: colors.secondaryText }}>
+            {createdAt.toDate().toLocaleString()}
+          </Text>
+        ) : null}
       </View>
     </View>
   );
@@ -53,5 +59,9 @@ const styles = StyleSheet.create({
   image: {
     width: "100%",
     height: 200,
+  },
+  createdAt: {
+    marginTop: 10,
+    alignSelf: "flex-end",
   },
 });

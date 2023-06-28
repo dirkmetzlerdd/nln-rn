@@ -4,6 +4,7 @@ import {
   DefaultTheme,
   DarkTheme,
   useTheme,
+  Theme,
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Icon from "react-native-vector-icons/AntDesign";
@@ -26,6 +27,7 @@ const vintageYellow = "#feda6a";
 const silverFox = "#d4d4dc";
 const matteGrey = "#393f4d";
 const darkSlate = "#1d1e22";
+const secondaryText = "grey";
 
 const MyTheme = {
   ...DefaultTheme,
@@ -36,18 +38,20 @@ const MyTheme = {
     textSecondary: "#d3d6db",
     background: "#d3d6db",
     cardBackground: "#3a4750",
+    secondaryText: secondaryText,
   },
 };
 
-const MyThemeDark = {
+const MyThemeDark: Theme = {
   ...DarkTheme,
   colors: {
     ...DarkTheme.colors,
     primary: vintageYellow,
     text: silverFox,
-    textSecondary: matteGrey,
     background: matteGrey,
     cardBackground: darkSlate,
+    secondaryText: secondaryText,
+    textSecondary: matteGrey,
   },
 };
 
