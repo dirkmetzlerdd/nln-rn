@@ -30,3 +30,11 @@ export const firebaseConfig = {
 - npm i
 - npm run start
 - Scan the QR code in the terminal with Expo Go (Android) or the Camera app (iOS)
+
+### Screenshots
+<img src="https://s3.eu-central-1.amazonaws.com/dirkmetzler.com/screenshots/IMG_0161.PNG" width="30%" />
+<img src="https://s3.eu-central-1.amazonaws.com/dirkmetzler.com/screenshots/IMG_0162.PNG" width="30%" />
+<img src="https://s3.eu-central-1.amazonaws.com/dirkmetzler.com/screenshots/IMG_0170.PNG" width="30%" />
+<img src="https://s3.eu-central-1.amazonaws.com/dirkmetzler.com/screenshots/IMG_0171.PNG" width="30%" />
+<img src="https://s3.eu-central-1.amazonaws.com/dirkmetzler.com/screenshots/IMG_0172.PNG" width="30%" />
+<img src="https://s3.eu-central-1.amazonaws.com/dirkmetzler.com/screenshots/IMG_0173.JPEG" width="30%" />
